@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1092447235200",
+    "project_id": "digital-era-kids",
+    "storage_bucket": "digital-era-kids.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092447235200:android:aafdbe3530fad5fd82ca65",
+        "android_client_info": {
+          "package_name": "com.app.digital_era_kids"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092447235200-30i7jpp8fol0ndoh3nrn75uu3910gmn4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.digital_era_kids",
+            "certificate_hash": "06e3745f2d71956b39f817384d9cf505ed5329c9"
+          }
+        },
+        {
+          "client_id": "1092447235200-v9r3r1t77j5qcak8s4p98ai4p0ps5cnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWFByJwQhOivU7WWVSj8NzlDfImCGhoN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092447235200-v9r3r1t77j5qcak8s4p98ai4p0ps5cnc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
