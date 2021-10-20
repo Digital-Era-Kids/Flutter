@@ -26,7 +26,7 @@ class Splash extends StatelessWidget {
     return SplashScreen(
       seconds: 4,
       navigateAfterSeconds: Login(),
-      imageBackground: AssetImage('assets/images/Splash1.png'),
+      imageBackground: AssetImage('assets/images/Splash.png'),
       useLoader: false,
     );
   }

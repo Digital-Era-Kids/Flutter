@@ -148,7 +148,7 @@ class _LoginState extends State<Login> {
                             )),
                       ),
                       Align(
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.centerRight,
                           child: FlatButton(
                             child: Text("Forgot password?"),
                             onPressed: () {
@@ -203,7 +203,7 @@ class _LoginState extends State<Login> {
                                     style: TextStyle(
                                         fontFamily: 'Roboto',
                                         color: Colors.black,
-                                        fontSize: 16))
+                                        fontSize: 14))
                               ],
                             ),
                           ),

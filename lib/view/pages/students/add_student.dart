@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
-class Teacher_Create extends StatefulWidget {
-  // const Teacher_Create({Key? key}) : super(key: key);
+class Student_Create extends StatefulWidget {
+  // const Student_Create({Key? key}) : super(key: key);
 
   @override
-  _Teacher_CreateState createState() => _Teacher_CreateState();
+  _Student_CreateState createState() => _Student_CreateState();
 }
 
-class _Teacher_CreateState extends State<Teacher_Create> {
+class _Student_CreateState extends State<Student_Create> {
   final _formKey = GlobalKey<FormState>();
   String Class, gender;
   String validateMobile(String value) {
@@ -49,7 +49,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                       width: 20,
                     ),
                     Text(
-                      "Add Teacher",
+                      " Add Student",
                       style: TextStyle(color: Colors.black, fontSize: 32),
                     )
                   ],
@@ -83,7 +83,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                               height: 50,
                               child: TextFormField(
                                 autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter some text';
@@ -115,11 +115,11 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 Container(
                                   height: 50,
                                   width:
-                                      MediaQuery.of(context).size.width * 0.5,
+                                  MediaQuery.of(context).size.width * 0.5,
                                   child: TextFormField(
                                     keyboardType: TextInputType.phone,
                                     autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                    AutovalidateMode.onUserInteraction,
                                     validator: (value) => validateMobile(value),
                                     decoration: InputDecoration(
                                       filled: true,
@@ -142,10 +142,10 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 Container(
                                   height: 50,
                                   width:
-                                      MediaQuery.of(context).size.width * 0.3,
+                                  MediaQuery.of(context).size.width * 0.3,
                                   child: TextFormField(
                                     autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                    AutovalidateMode.onUserInteraction,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter some text';
@@ -183,7 +183,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                       borderRadius: BorderRadius.circular(10)),
                                   height: 50,
                                   width:
-                                      MediaQuery.of(context).size.width * 0.5,
+                                  MediaQuery.of(context).size.width * 0.5,
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton<String>(
                                       hint: Text(
@@ -214,7 +214,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                       borderRadius: BorderRadius.circular(10)),
                                   height: 50,
                                   width:
-                                      MediaQuery.of(context).size.width * 0.3,
+                                  MediaQuery.of(context).size.width * 0.3,
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton<String>(
                                       hint: Text(
@@ -248,40 +248,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                             Container(
                               height: 50,
                               child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter some value';
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color(0xffEAF0D4),
-                                  enabled: true,
-                                  hintText: "Enter Salary",
-                                  labelText: "Salary",
-                                  labelStyle: TextStyle(
-                                      color: Color(0xFF737373), fontSize: 12),
-                                  hintStyle: TextStyle(
-                                      color: Color(0xFF737373), fontSize: 14),
-                                  focusedBorder: authTfBorderOutline(),
-                                  border: authTfBorderOutline(),
-                                  enabledBorder: authTfBorderOutline(),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Container(
-                              height: 50,
-                              child: TextFormField(
                                 keyboardType: TextInputType.emailAddress,
                                 autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   if (value.trim().isEmpty) {
                                     return "Please enter email id";
@@ -318,7 +287,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 maxLines: 3,
                                 keyboardType: TextInputType.emailAddress,
                                 autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   if (value.trim().isEmpty) {
                                     return "Please enter address";
@@ -363,14 +332,14 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                               child: Text(
                                 "Cancel",
                                 style:
-                                    TextStyle(fontSize: 18, color: Color(0xff0083FD)),
+                                TextStyle(fontSize: 18, color: Color(0xff0083FD)),
                               )),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.4,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                          color: Color(0xff0083FD)),
+                              color: Color(0xff0083FD)),
                           child: TextButton(
                               onPressed: () { Navigator.pop(context); },
                               child: Text(
