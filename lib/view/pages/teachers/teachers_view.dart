@@ -12,6 +12,10 @@ class _TeachersState extends State<Teachers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar:  PreferredSize(
+        // preferredSize: Size.fromHeight(1),
+        child: Container(height:30,color: Color(0xffffc809),),
+      ),
       appBar: PreferredSize(
           child: Container(
               padding: EdgeInsets.only(left: 20, bottom: 20),
@@ -47,49 +51,38 @@ class _TeachersState extends State<Teachers> {
               builder: (context) => Teacher_Create()));
         },
       ),
-      body: Container(
+      body: SingleChildScrollView(
+        child: Container(
+          padding:EdgeInsets.symmetric(horizontal: 20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SingleChildScrollView(
-                child: Container(
-                  padding:EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60,
-                        padding:EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.grey[300])),
-                        margin:EdgeInsets.symmetric(horizontal: 20,vertical: 30) ,
-                          child: TextButton(
-                              onPressed: () {
-
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Search',
-                                    style: TextStyle(color: Colors.grey[700]),
-                                  ),
-                                  Icon(Icons.search, color: Colors.grey[700])
-                                ],
-                              ))),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Container(
-                color: Color(0xffffc809),
-                width: MediaQuery.of(context).size.width,
-                height: 30,
-              )
+                height: 60,
+                padding:EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Colors.grey[300])),
+                margin:EdgeInsets.symmetric(horizontal: 20,vertical: 30) ,
+                  child: TextButton(
+                      onPressed: () {
+
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Search',
+                            style: TextStyle(color: Colors.grey[700]),
+                          ),
+                          Icon(Icons.search, color: Colors.grey[700])
+                        ],
+                      ))),
+              SizedBox(
+                height: 20,
+              ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

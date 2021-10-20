@@ -12,6 +12,10 @@ class _StudentsState extends State<Students> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar:  PreferredSize(
+        // preferredSize: Size.fromHeight(1),
+        child: Container(height:30,color: Color(0xffffc809),),
+      ),
       appBar: PreferredSize(
           child: Container(
               padding: EdgeInsets.only(left: 20, bottom: 20),
@@ -47,11 +51,7 @@ class _StudentsState extends State<Students> {
           //     builder: (context) => Teacher_Create()));
         },
       ),
-      body: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SingleChildScrollView(
+      body: SingleChildScrollView(
                 child: Container(
                   padding:EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -83,13 +83,6 @@ class _StudentsState extends State<Students> {
                   ),
                 ),
               ),
-              Container(
-                color: Color(0xffffc809),
-                width: MediaQuery.of(context).size.width,
-                height: 30,
-              )
-            ],
-          )),
     );
   }
 }
