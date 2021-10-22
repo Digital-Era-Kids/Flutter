@@ -1,6 +1,7 @@
-import 'package:digital_era_kids/view/pages/signin/login.dart';
+
 import 'package:digital_era_kids/view/pages/teachers/teachers_view.dart';
 import 'package:flutter/material.dart';
+import 'package:digital_era_kids/services/auth_services.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +12,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  authServices authentication = authServices();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: Color(0xff0083fd)),
                                     child: TextButton(
                                       onPressed: () {
-                                        Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (context) => Login()));
+                                        authentication.SignOut(context);
+
                                       },
                                       child: Text("Log Out",
                                           style: TextStyle(

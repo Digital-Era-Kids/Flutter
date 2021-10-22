@@ -1,8 +1,8 @@
-import 'package:digital_era_kids/view/pages/home.dart';
+
 import 'package:digital_era_kids/view/pages/signin/forgotPassword.dart';
-import 'package:digital_era_kids/view/pages/signin/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:digital_era_kids/services/auth_services.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -20,6 +20,8 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  authServices authentication = authServices();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,60 +170,20 @@ class _LoginState extends State<Login> {
                               ),
                               padding: EdgeInsets.all(2),
                               width: MediaQuery.of(context).size.width * 0.8,
-                              child: FlatButton(
+                              child: TextButton(
                                 child: Text("Login",
                                     style: TextStyle(
                                         fontFamily: 'Roboto',
                                         color: Colors.white,
                                         fontSize: 16)),
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                                  if(_formKey.currentState.validate()){
+                                    authentication.LogIn(email.text, password.text, context);
+
+                                  }
+
                                 },
                               ))),
-                      SizedBox(height: 20),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey[400],
-                          ),
-                          padding: EdgeInsets.all(2),
-                          child: FlatButton(
-                            onPressed: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: const [
-                                Image(
-                                  image: AssetImage('assets/images/google.png'),
-                                  fit: BoxFit.cover,
-                                  height: 30,
-                                ),
-                                Text("Sign in with Google",
-                                    style: TextStyle(
-                                        fontFamily: 'Roboto',
-                                        color: Colors.black,
-                                        fontSize: 14))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: TextButton(
-                          child: const Text("Don't have an account? SignUp"),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => SignUp()));
-                          },
-                        ),
-                      )
                     ],
                   ),
                 ),
