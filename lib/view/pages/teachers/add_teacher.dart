@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+final _fire = FirebaseFirestore.instance;
 
 class Teacher_Create extends StatefulWidget {
   // const Teacher_Create({Key? key}) : super(key: key);
@@ -9,8 +11,10 @@ class Teacher_Create extends StatefulWidget {
 }
 
 class _Teacher_CreateState extends State<Teacher_Create> {
+
   final _formKey = GlobalKey<FormState>();
-  String Class, gender;
+
+  String Class, gender,name,phoneno,salary,email,address,age;
   String validateMobile(String value) {
     String patttern = r'(^(?:[+0]9)?[0-9]{10}$)';
     RegExp regExp = new RegExp(patttern);
@@ -105,6 +109,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                           border: authTfBorderOutline(),
                           enabledBorder: authTfBorderOutline(),
                         ),
+                        onChanged:(value){
+                          name=value;
+                        },
                       ),
                       SizedBox(
                         height: 15,
@@ -137,6 +144,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 border: authTfBorderOutline(),
                                 enabledBorder: authTfBorderOutline(),
                               ),
+                              onChanged: (value){
+                                phoneno=value;
+                              },
                             ),
                           ),
                           Container(
@@ -168,6 +178,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 border: authTfBorderOutline(),
                                 enabledBorder: authTfBorderOutline(),
                               ),
+                              onChanged: (value){
+                                age=value;
+                              },
                             ),
                           ),
                         ],
@@ -271,6 +284,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                             border: authTfBorderOutline(),
                             enabledBorder: authTfBorderOutline(),
                           ),
+                          onChanged: (value){
+                            salary=value;
+                          },
                         ),
                       ),
                       SizedBox(
@@ -306,6 +322,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                             border: authTfBorderOutline(),
                             enabledBorder: authTfBorderOutline(),
                           ),
+                          onChanged: (value){
+                            email=value;
+                          },
                         ),
                       ),
                       SizedBox(
@@ -340,6 +359,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                             border: authTfBorderOutline(),
                             enabledBorder: authTfBorderOutline(),
                           ),
+                          onChanged: (value){
+                            address=value;
+                          },
                         ),
                       ),
                     ],
@@ -372,7 +394,21 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                         borderRadius: BorderRadius.circular(10),
                     color: Color(0xff0083FD)),
                     child: TextButton(
-                        onPressed: () { Navigator.pop(context); },
+
+                        onPressed: () async{
+                         _fire.collection('teacher_details').add(
+                           {
+                           'name':name,
+                           'age':age,
+                           'phone':phoneno,
+                           'salary':salary,
+                           'class':Class,
+                             'gender':gender,
+                           'address':address,
+                           'email':email,
+                         },
+                         );
+                        },
                         child: Text(
                           "Add",
                           style:

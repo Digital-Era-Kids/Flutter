@@ -2,6 +2,7 @@
 import 'package:digital_era_kids/view/pages/teachers/teachers_view.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_era_kids/services/auth_services.dart';
+import 'package:digital_era_kids/view/pages/attendence/attendence.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -189,7 +190,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Attendence()));
+                      },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

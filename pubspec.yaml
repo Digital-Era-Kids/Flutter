@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   splashscreen:
+  cloud_firestore: ^2.5.3
   email_validator:
   firebase_auth:
   firebase_core:

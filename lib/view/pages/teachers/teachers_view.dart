@@ -1,6 +1,7 @@
 import 'package:digital_era_kids/view/pages/teachers/add_teacher.dart';
 import 'package:flutter/material.dart';
 
+
 class Teachers extends StatefulWidget {
   // const Teachers({Key? key}) : super(key: key);
 
@@ -79,6 +80,7 @@ class _TeachersState extends State<Teachers> {
               SizedBox(
                 height: 20,
               ),
+
             ],
           ),
         ),

@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1092447235200:android:aafdbe3530fad5fd82ca65",
+        "mobilesdk_app_id": "1:1092447235200:android:cf15d039efdf82fd82ca65",
         "android_client_info": {
-          "package_name": "com.app.digital_era_kids"
+          "package_name": "com.app.digit_era_kids"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1092447235200-30i7jpp8fol0ndoh3nrn75uu3910gmn4.apps.googleusercontent.com",
+          "client_id": "1092447235200-h4g9k8tfejlhno5a7m0225kcan1ksi3i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.digital_era_kids",
-            "certificate_hash": "06e3745f2d71956b39f817384d9cf505ed5329c9"
+            "package_name": "com.app.digit_era_kids",
+            "certificate_hash": "e712b5fc07ce0663c5afbd6425b69c98e0af8c8f"
           }
         },
         {
