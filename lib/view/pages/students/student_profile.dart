@@ -3,11 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 class Student_Profile extends StatefulWidget {
+  Student_Profile({this .name,this.age,this.email});
+  final String email;
+  final String name;
+  final String age;
+
   @override
   _Student_ProfileState createState() => _Student_ProfileState();
 }
 
 class _Student_ProfileState extends State<Student_Profile> {
+  String tname;
+  String tage;
+  String temail;
+  @override
+  void initState() {
+
+    super.initState();
+    getData(widget.email,widget.age,widget.name);
+  }
+  void getData(email,age,name){
+    tname=name;
+    tage=age;
+    temail=email;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +84,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Student Name',
+                    '$tname',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -101,7 +120,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                 children: [
                   Text('Contact Details:',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
                   Text('Mobile No:',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
-                  Text('Email ID:',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
+                  Text('Email ID:$temail',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
                 ],
               ),
             ),
@@ -120,7 +139,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                 children: [
                   Text('Personal Details:',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
                   Text('Address:',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
-                  Text('Age:',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
+                  Text('Age:$tage',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
                   Text('Nationality:',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
 
                 ],
