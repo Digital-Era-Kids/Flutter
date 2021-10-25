@@ -378,7 +378,8 @@ class _Student_CreateState extends State<Student_Create> {
                                   }
                                 })
                                 .whenComplete(() => error == null
-                                    ? _fire.collection("students").add({
+                                    ? _fire.collection("users").doc(email)
+                                .set({
                                         'name': name,
                                         'age': age,
                                         'phone': phoneNo,

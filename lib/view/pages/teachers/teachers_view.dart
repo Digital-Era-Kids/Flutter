@@ -4,7 +4,7 @@ import 'package:digital_era_kids/view/pages/teachers/add_teacher.dart';
 import 'package:digital_era_kids/view/pages/teachers/teacher_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:digital_era_kids/model/teacher.dart';
+import 'package:digital_era_kids/model/User.dart';
 final _firestore=FirebaseFirestore.instance;
 
 class TeachersView extends StatefulWidget {
@@ -98,11 +98,11 @@ class TeachersViewList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(stream:_firestore.collection('teacher_details').orderBy('name',descending: false).snapshots(),
+    return StreamBuilder<QuerySnapshot>(stream:_firestore.collection('users').snapshots(),
       builder: (BuildContext context,AsyncSnapshot snapshot){
       if(snapshot.hasData) {
             final teacherlist = snapshot.data.docs;
-            List<Teacher> teacher = [];
+            List<User> teacher = [];
             for (var TeachersView in teacherlist) {
               final teachername = TeachersView.data()['name'];
               final teacherGender = TeachersView.data()['gender'];
@@ -111,17 +111,22 @@ class TeachersViewList extends StatelessWidget {
               final teacherAge = TeachersView.data()['age'];
               final teacherClass = TeachersView.data()['class'];
               final teacherAddress = TeachersView.data()['address'];
-              final teacherContainer = Teacher(
+              final roleId = TeachersView.data()["role_id"];
+              final teacherContainer = User(
                 name: teachername,
                 gender: teacherGender,
                 age: teacherAge,
                 email: teacherEmail,
                 phone_no: teacherNo,
                 Class: teacherClass,
-                address: teacherAddress
+                address: teacherAddress,
+                roleId: roleId
               );
               teacher.add(teacherContainer);
             }
+            teacher = teacher.where((element) => element.roleId == 1).toList();
+            print("************");
+            print(teacher);
             return Container(
               height: MediaQuery.of(context).size.height * 0.6,
               // margin: EdgeInsets.symmetric(vertical: 5,),

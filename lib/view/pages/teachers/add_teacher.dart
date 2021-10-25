@@ -1,4 +1,4 @@
-import 'package:digital_era_kids/model/teacher.dart';
+import 'package:digital_era_kids/model/User.dart';
 import 'package:digital_era_kids/services/auth_services.dart';
 import 'package:digital_era_kids/view/pages/teachers/teachers_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -414,12 +414,12 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                   }
                                 })
                                 .whenComplete(() => error == null
-                                    ? _fire.collection('teacher_details').add(
+                                    ? _fire.collection('users').doc(email).set(
                                         {
                                           'name': name,
                                           'age': age,
                                           'phone': phoneNo,
-                                          'salary': salary,
+                                          'salary': int.parse(salary),
                                           'class': Class,
                                           'gender': gender,
                                           'address': address,
