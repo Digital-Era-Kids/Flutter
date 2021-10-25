@@ -1,9 +1,8 @@
-
+import 'package:digital_era_kids/view/pages/students/student_view.dart';
 import 'package:digital_era_kids/view/pages/teachers/teachers_view.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_era_kids/services/auth_services.dart';
 import 'package:digital_era_kids/view/pages/attendence/attendence.dart';
-
 
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
@@ -13,7 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   authServices authentication = authServices();
 
   @override
@@ -97,7 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: TextButton(
                                       onPressed: () {
                                         authentication.SignOut(context);
-
                                       },
                                       child: Text("Log Out",
                                           style: TextStyle(
@@ -115,20 +112,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )),
           preferredSize: Size.fromHeight(100.0)),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * 0.1),
-          child: SingleChildScrollView(
-              child: Container(
-            decoration: BoxDecoration(
-                color: Color(0xffF6F5F5),
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(18),
-                    topLeft: Radius.circular(18)),
-                border: Border.all(color: Colors.grey[300])),
-            child: Column(
-              children: [
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          FractionallySizedBox(
+            heightFactor: 0.2,
+            alignment: Alignment.topCenter,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).size.height * 0.05),
+            ),
+          ),
+          FractionallySizedBox(
+            alignment: Alignment.bottomCenter,
+            heightFactor: 0.9,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+              decoration: BoxDecoration(
+              color: Color(0xffF6F5F5),
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(18),
+                  topLeft: Radius.circular(18)),
+              border: Border.all(color: Colors.grey[300])),
+              child: SingleChildScrollView(
+                child: Column(
+            children: [
                 SizedBox(
                   height: 10,
                 ),
@@ -149,20 +157,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             "Students",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.black),
                           )
                         ],
                       ),
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Teachers()));
+                            builder: (context) => StudentsView()));
                       },
                     ),
                     SizedBox(
                       width: 20,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TeachersView()));
+                      },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,7 +188,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             "Teachers",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.black),
                           )
                         ],
                       ),
@@ -207,7 +220,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             "Attendance",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.black),
                           )
                         ],
                       ),
@@ -230,17 +244,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             "Assignments",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.black),
                           )
                         ],
                       ),
                     )
                   ],
                 ),
-              ],
+            ],
+                ),
+              ),
             ),
-          )),
-        ),
+          ),
+        ],
       ),
     );
   }

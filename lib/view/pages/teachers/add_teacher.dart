@@ -1,6 +1,12 @@
+import 'package:digital_era_kids/model/teacher.dart';
+import 'package:digital_era_kids/services/auth_services.dart';
+import 'package:digital_era_kids/view/pages/teachers/teachers_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 final _fire = FirebaseFirestore.instance;
 
 class Teacher_Create extends StatefulWidget {
@@ -11,10 +17,11 @@ class Teacher_Create extends StatefulWidget {
 }
 
 class _Teacher_CreateState extends State<Teacher_Create> {
-
   final _formKey = GlobalKey<FormState>();
-
-  String Class, gender,name,phoneno,salary,email,address,age;
+  // FirebaseAuth auth = FirebaseAuth.insta
+  String name, phoneNo, salary, email, address, age;
+  String gender, Class;
+  authServices auth = new authServices();
   String validateMobile(String value) {
     String patttern = r'(^(?:[+0]9)?[0-9]{10}$)';
     RegExp regExp = new RegExp(patttern);
@@ -29,9 +36,12 @@ class _Teacher_CreateState extends State<Teacher_Create> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:  PreferredSize(
+      bottomNavigationBar: PreferredSize(
         // preferredSize: Size.fromHeight(1),
-        child: Container(height:30,color: Color(0xffffc809),),
+        child: Container(
+          height: 30,
+          color: Color(0xffffc809),
+        ),
       ),
       backgroundColor: Color(0xffF6F5F5),
       appBar: PreferredSize(
@@ -68,11 +78,12 @@ class _Teacher_CreateState extends State<Teacher_Create> {
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topRight: Radius.circular(18), topLeft:Radius.circular(18) )
-              ),
-                padding: EdgeInsets.only(
-                    left: 30, right: 30, top: 50, bottom: 30),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(18),
+                        topLeft: Radius.circular(18))),
+                padding:
+                    EdgeInsets.only(left: 30, right: 30, top: 50, bottom: 30),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -80,15 +91,13 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                     children: [
                       Text(
                         "Enter Details",
-                        style: TextStyle(
-                            color: Colors.black26, fontSize: 22),
+                        style: TextStyle(color: Colors.black26, fontSize: 22),
                       ),
                       SizedBox(
                         height: 50,
                       ),
                       TextFormField(
-                        autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter some text';
@@ -101,16 +110,18 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                           enabled: true,
                           hintText: "Enter Name",
                           labelText: "Name",
-                          labelStyle: TextStyle(
-                              color: Color(0xFF737373), fontSize: 12),
-                          hintStyle: TextStyle(
-                              color: Color(0xFF737373), fontSize: 14),
+                          labelStyle:
+                              TextStyle(color: Color(0xFF737373), fontSize: 12),
+                          hintStyle:
+                              TextStyle(color: Color(0xFF737373), fontSize: 14),
                           focusedBorder: authTfBorderOutline(),
                           border: authTfBorderOutline(),
                           enabledBorder: authTfBorderOutline(),
                         ),
-                        onChanged:(value){
-                          name=value;
+                        onChanged: (value) {
+                          setState(() {
+                            name = value;
+                          });
                         },
                       ),
                       SizedBox(
@@ -120,9 +131,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            height: 50,
-                            width:
-                                MediaQuery.of(context).size.width * 0.5,
+                            width: MediaQuery.of(context).size.width * 0.5,
                             child: TextFormField(
                               keyboardType: TextInputType.phone,
                               autovalidateMode:
@@ -135,24 +144,22 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 hintText: "Enter Phone number",
                                 labelText: "Phone",
                                 labelStyle: TextStyle(
-                                    color: Color(0xFF737373),
-                                    fontSize: 12),
+                                    color: Color(0xFF737373), fontSize: 12),
                                 hintStyle: TextStyle(
-                                    color: Color(0xFF737373),
-                                    fontSize: 14),
+                                    color: Color(0xFF737373), fontSize: 14),
                                 focusedBorder: authTfBorderOutline(),
                                 border: authTfBorderOutline(),
                                 enabledBorder: authTfBorderOutline(),
                               ),
-                              onChanged: (value){
-                                phoneno=value;
+                              onChanged: (value) {
+                                setState(() {
+                                  phoneNo = value;
+                                });
                               },
                             ),
                           ),
                           Container(
-                            height: 50,
-                            width:
-                                MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
@@ -169,17 +176,17 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 hintText: "Enter Age",
                                 labelText: "Age",
                                 labelStyle: TextStyle(
-                                    color: Color(0xFF737373),
-                                    fontSize: 12),
+                                    color: Color(0xFF737373), fontSize: 12),
                                 hintStyle: TextStyle(
-                                    color: Color(0xFF737373),
-                                    fontSize: 14),
+                                    color: Color(0xFF737373), fontSize: 14),
                                 focusedBorder: authTfBorderOutline(),
                                 border: authTfBorderOutline(),
                                 enabledBorder: authTfBorderOutline(),
                               ),
-                              onChanged: (value){
-                                age=value;
+                              onChanged: (value) {
+                                setState(() {
+                                  age = value;
+                                });
                               },
                             ),
                           ),
@@ -195,15 +202,13 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 color: Color(0xffEAF0D4),
                                 borderRadius: BorderRadius.circular(10)),
                             height: 50,
-                            width:
-                                MediaQuery.of(context).size.width * 0.5,
+                            width: MediaQuery.of(context).size.width * 0.5,
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 hint: Text(
                                   gender != null ? gender : 'Gender',
                                   style: TextStyle(
-                                      color: Color(0xFF737373),
-                                      fontSize: 12),
+                                      color: Color(0xFF737373), fontSize: 12),
                                 ),
                                 items: <String>['Male', 'Female', 'Other']
                                     .map((String value) {
@@ -226,15 +231,13 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                 color: Color(0xffEAF0D4),
                                 borderRadius: BorderRadius.circular(10)),
                             height: 50,
-                            width:
-                                MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 hint: Text(
                                   Class != null ? Class : 'Class',
                                   style: TextStyle(
-                                      color: Color(0xFF737373),
-                                      fontSize: 12),
+                                      color: Color(0xFF737373), fontSize: 12),
                                 ),
                                 items: <String>[
                                   'LKG A',
@@ -259,11 +262,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                       ),
                       SizedBox(height: 15),
                       Container(
-                        height: 50,
                         child: TextFormField(
                           keyboardType: TextInputType.number,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter some value';
@@ -284,8 +285,10 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                             border: authTfBorderOutline(),
                             enabledBorder: authTfBorderOutline(),
                           ),
-                          onChanged: (value){
-                            salary=value;
+                          onChanged: (value) {
+                            setState(() {
+                              salary = value;
+                            });
                           },
                         ),
                       ),
@@ -293,11 +296,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                         height: 15,
                       ),
                       Container(
-                        height: 50,
                         child: TextFormField(
                           keyboardType: TextInputType.emailAddress,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value.trim().isEmpty) {
                               return "Please enter email id";
@@ -322,8 +323,10 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                             border: authTfBorderOutline(),
                             enabledBorder: authTfBorderOutline(),
                           ),
-                          onChanged: (value){
-                            email=value;
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                            });
                           },
                         ),
                       ),
@@ -334,10 +337,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                         height: 80,
                         child: TextFormField(
                           minLines: 1,
-                          maxLines: 3,
+                          maxLines: 5,
                           keyboardType: TextInputType.emailAddress,
-                          autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value.trim().isEmpty) {
                               return "Please enter address";
@@ -359,8 +361,10 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                             border: authTfBorderOutline(),
                             enabledBorder: authTfBorderOutline(),
                           ),
-                          onChanged: (value){
-                            address=value;
+                          onChanged: (value) {
+                            setState(() {
+                              address = value;
+                            });
                           },
                         ),
                       ),
@@ -381,7 +385,9 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Color(0xff0083FD))),
                     child: TextButton(
-                        onPressed: () { Navigator.pop(context); },
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         child: Text(
                           "Cancel",
                           style:
@@ -392,27 +398,45 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                     width: MediaQuery.of(context).size.width * 0.4,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                    color: Color(0xff0083FD)),
+                        color: Color(0xff0083FD)),
                     child: TextButton(
-
-                        onPressed: () async{
-                         _fire.collection('teacher_details').add(
-                           {
-                           'name':name,
-                           'age':age,
-                           'phone':phoneno,
-                           'salary':salary,
-                           'class':Class,
-                             'gender':gender,
-                           'address':address,
-                           'email':email,
-                         },
-                         );
+                        onPressed: () async {
+                          String error;
+                          if (_formKey.currentState.validate()) {
+                            var user = FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: email, password: "abcde1234")
+                                .catchError((onError) {
+                                  if (onError.code == "email-already-in-use") {
+                                    error = "error";
+                                    showFlushbar(
+                                        context, "Email already in use");
+                                  }
+                                })
+                                .whenComplete(() => error == null
+                                    ? _fire.collection('teacher_details').add(
+                                        {
+                                          'name': name,
+                                          'age': age,
+                                          'phone': phoneNo,
+                                          'salary': salary,
+                                          'class': Class,
+                                          'gender': gender,
+                                          'address': address,
+                                          'email': email,
+                                          'role_id': 1
+                                        },
+                                      )
+                                    : null)
+                                .whenComplete(() => error == null
+                                    ? showFlushbar(
+                                        context, "Teacher added successfully!!")
+                                    : null);
+                          }
                         },
                         child: Text(
                           "Add",
-                          style:
-                          TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         )),
                   ),
                 ],
@@ -432,4 +456,21 @@ OutlineInputBorder authTfBorderOutline() {
         color: Color(0xffEAF0D4),
         width: 1.0,
       ));
+}
+
+showFlushbar(BuildContext context, String message) {
+  Flushbar(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(20),
+    messageText: Text(
+      message,
+      style: TextStyle(color: Colors.white),
+    ),
+    borderRadius: 10,
+    backgroundColor: Colors.grey[800],
+    duration: Duration(seconds: 3),
+  )..show(context).whenComplete(() => message == "Teacher added successfully!!"
+      ? Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => TeachersView()))
+      : null);
 }

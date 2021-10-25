@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:digital_era_kids/services/auth_services.dart';
+import 'package:digital_era_kids/view/pages/students/student_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -9,8 +14,12 @@ class Student_Create extends StatefulWidget {
 }
 
 class _Student_CreateState extends State<Student_Create> {
+  final _fire = FirebaseFirestore.instance;
   final _formKey = GlobalKey<FormState>();
-  String Class, gender;
+  String name, phoneNo, salary, email, address, age;
+  String gender, Class;
+  authServices auth;
+
   String validateMobile(String value) {
     String patttern = r'(^(?:[+0]9)?[0-9]{10}$)';
     RegExp regExp = new RegExp(patttern);
@@ -25,9 +34,12 @@ class _Student_CreateState extends State<Student_Create> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:  PreferredSize(
+      bottomNavigationBar: PreferredSize(
         // preferredSize: Size.fromHeight(1),
-        child: Container(height:30,color: Color(0xffffc809),),
+        child: Container(
+          height: 30,
+          color: Color(0xffffc809),
+        ),
       ),
       backgroundColor: Color(0xffF6F5F5),
       appBar: PreferredSize(
@@ -64,8 +76,8 @@ class _Student_CreateState extends State<Student_Create> {
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.only(
-                    left: 30, right: 30, top: 50, bottom: 30),
+                padding:
+                    EdgeInsets.only(left: 30, right: 30, top: 50, bottom: 30),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -73,22 +85,24 @@ class _Student_CreateState extends State<Student_Create> {
                     children: [
                       Text(
                         "Enter Details",
-                        style: TextStyle(
-                            color: Colors.black26, fontSize: 22),
+                        style: TextStyle(color: Colors.black26, fontSize: 22),
                       ),
                       SizedBox(
                         height: 50,
                       ),
                       Container(
-                        height: 50,
                         child: TextFormField(
-                          autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter some text';
                             }
                             return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              name = value;
+                            });
                           },
                           decoration: InputDecoration(
                             filled: true,
@@ -113,14 +127,17 @@ class _Student_CreateState extends State<Student_Create> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            height: 50,
-                            width:
-                            MediaQuery.of(context).size.width * 0.5,
+                            width: MediaQuery.of(context).size.width * 0.5,
                             child: TextFormField(
                               keyboardType: TextInputType.phone,
                               autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.onUserInteraction,
                               validator: (value) => validateMobile(value),
+                              onChanged: (value) {
+                                setState(() {
+                                  phoneNo = value;
+                                });
+                              },
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color(0xffEAF0D4),
@@ -128,11 +145,9 @@ class _Student_CreateState extends State<Student_Create> {
                                 hintText: "Enter Phone number",
                                 labelText: "Phone",
                                 labelStyle: TextStyle(
-                                    color: Color(0xFF737373),
-                                    fontSize: 12),
+                                    color: Color(0xFF737373), fontSize: 12),
                                 hintStyle: TextStyle(
-                                    color: Color(0xFF737373),
-                                    fontSize: 14),
+                                    color: Color(0xFF737373), fontSize: 14),
                                 focusedBorder: authTfBorderOutline(),
                                 border: authTfBorderOutline(),
                                 enabledBorder: authTfBorderOutline(),
@@ -140,17 +155,20 @@ class _Student_CreateState extends State<Student_Create> {
                             ),
                           ),
                           Container(
-                            height: 50,
-                            width:
-                            MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: TextFormField(
                               autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter some text';
                                 }
                                 return null;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  age = value;
+                                });
                               },
                               decoration: InputDecoration(
                                 filled: true,
@@ -159,11 +177,9 @@ class _Student_CreateState extends State<Student_Create> {
                                 hintText: "Enter Age",
                                 labelText: "Age",
                                 labelStyle: TextStyle(
-                                    color: Color(0xFF737373),
-                                    fontSize: 12),
+                                    color: Color(0xFF737373), fontSize: 12),
                                 hintStyle: TextStyle(
-                                    color: Color(0xFF737373),
-                                    fontSize: 14),
+                                    color: Color(0xFF737373), fontSize: 14),
                                 focusedBorder: authTfBorderOutline(),
                                 border: authTfBorderOutline(),
                                 enabledBorder: authTfBorderOutline(),
@@ -182,15 +198,13 @@ class _Student_CreateState extends State<Student_Create> {
                                 color: Color(0xffEAF0D4),
                                 borderRadius: BorderRadius.circular(10)),
                             height: 50,
-                            width:
-                            MediaQuery.of(context).size.width * 0.5,
+                            width: MediaQuery.of(context).size.width * 0.5,
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 hint: Text(
                                   gender != null ? gender : 'Gender',
                                   style: TextStyle(
-                                      color: Color(0xFF737373),
-                                      fontSize: 12),
+                                      color: Color(0xFF737373), fontSize: 12),
                                 ),
                                 items: <String>['Male', 'Female', 'Other']
                                     .map((String value) {
@@ -213,15 +227,13 @@ class _Student_CreateState extends State<Student_Create> {
                                 color: Color(0xffEAF0D4),
                                 borderRadius: BorderRadius.circular(10)),
                             height: 50,
-                            width:
-                            MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
                                 hint: Text(
                                   Class != null ? Class : 'Class',
                                   style: TextStyle(
-                                      color: Color(0xFF737373),
-                                      fontSize: 12),
+                                      color: Color(0xFF737373), fontSize: 12),
                                 ),
                                 items: <String>[
                                   'LKG A',
@@ -246,11 +258,9 @@ class _Student_CreateState extends State<Student_Create> {
                       ),
                       SizedBox(height: 15),
                       Container(
-                        height: 50,
                         child: TextFormField(
                           keyboardType: TextInputType.emailAddress,
-                          autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value.trim().isEmpty) {
                               return "Please enter email id";
@@ -260,6 +270,13 @@ class _Student_CreateState extends State<Student_Create> {
                             } else {
                               return null;
                             }
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                            });
+                            print("************");
+                            print(email);
                           },
                           decoration: InputDecoration(
                             filled: true,
@@ -286,14 +303,18 @@ class _Student_CreateState extends State<Student_Create> {
                           minLines: 1,
                           maxLines: 3,
                           keyboardType: TextInputType.emailAddress,
-                          autovalidateMode:
-                          AutovalidateMode.onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value.trim().isEmpty) {
                               return "Please enter address";
                             } else {
                               return null;
                             }
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              address = value;
+                            });
                           },
                           decoration: InputDecoration(
                             filled: true,
@@ -328,11 +349,13 @@ class _Student_CreateState extends State<Student_Create> {
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Color(0xff0083FD))),
                     child: TextButton(
-                        onPressed: () { Navigator.pop(context); },
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         child: Text(
                           "Cancel",
                           style:
-                          TextStyle(fontSize: 18, color: Color(0xff0083FD)),
+                              TextStyle(fontSize: 18, color: Color(0xff0083FD)),
                         )),
                   ),
                   Container(
@@ -341,11 +364,41 @@ class _Student_CreateState extends State<Student_Create> {
                         borderRadius: BorderRadius.circular(10),
                         color: Color(0xff0083FD)),
                     child: TextButton(
-                        onPressed: () { Navigator.pop(context); },
+                        onPressed: () {
+                          String error;
+                          if (_formKey.currentState.validate()) {
+                            FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: email, password: "abcde1234")
+                                .catchError((onError) {
+                                  if (onError.code == "email-already-in-use") {
+                                    error = "error";
+                                    showFlushbar(
+                                        context, "Email already in use");
+                                  }
+                                })
+                                .whenComplete(() => error == null
+                                    ? _fire.collection("students").add({
+                                        'name': name,
+                                        'age': age,
+                                        'phone': phoneNo,
+                                        'class': Class,
+                                        'gender': gender,
+                                        'address': address,
+                                        'email': email,
+                                        'role_id': 2
+                                      })
+                                    : null)
+                                .whenComplete(() => error == null
+                                    ? showFlushbar(
+                                        context, "Student added successfully!!")
+                                    : null);
+
+                          }
+                        },
                         child: Text(
                           "Add",
-                          style:
-                          TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         )),
                   ),
                 ],
@@ -365,4 +418,21 @@ OutlineInputBorder authTfBorderOutline() {
         color: Color(0xffEAF0D4),
         width: 1.0,
       ));
+}
+
+showFlushbar(BuildContext context, String message) {
+  Flushbar(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(20),
+    messageText: Text(
+      message,
+      style: TextStyle(color: Colors.white),
+    ),
+    borderRadius: 10,
+    backgroundColor: Colors.grey[800],
+    duration: Duration(seconds: 3),
+  )..show(context).whenComplete(() => message == "Student added successfully!!"
+      ? Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => StudentsView()))
+      : null);
 }

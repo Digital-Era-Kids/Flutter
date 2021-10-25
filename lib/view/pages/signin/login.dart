@@ -179,9 +179,7 @@ class _LoginState extends State<Login> {
                                 onPressed: () {
                                   if(_formKey.currentState.validate()){
                                     authentication.LogIn(email.text, password.text, context);
-
                                   }
-
                                 },
                               ))),
                     ],

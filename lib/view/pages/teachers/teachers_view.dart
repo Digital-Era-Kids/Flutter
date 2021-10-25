@@ -1,18 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_era_kids/view/pages/students/student_profile.dart';
 import 'package:digital_era_kids/view/pages/teachers/add_teacher.dart';
+import 'package:digital_era_kids/view/pages/teachers/teacher_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:digital_era_kids/model/teacher.dart';
 final _firestore=FirebaseFirestore.instance;
 
-class Teachers extends StatefulWidget {
-  // const Teachers({Key? key}) : super(key: key);
+class TeachersView extends StatefulWidget {
+  // const TeachersView({Key? key}) : super(key: key);
 
   @override
-  _TeachersState createState() => _TeachersState();
+  _TeachersViewState createState() => _TeachersViewState();
 }
 
-class _TeachersState extends State<Teachers> {
+class _TeachersViewState extends State<TeachersView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +42,7 @@ class _TeachersState extends State<Teachers> {
                       ),
                     ),
                     SizedBox(width: 20,),
-                    Text("Teachers",style: TextStyle(color: Colors.black,fontSize: 32),)
+                    Text("TeachersView",style: TextStyle(color: Colors.black,fontSize: 32),)
                   ],
                 ),
               )),
@@ -83,7 +85,7 @@ class _TeachersState extends State<Teachers> {
               SizedBox(
                 height: 20,
               ),
-              TeachersList(),
+              TeachersViewList(),
             ],
           ),
         ),
@@ -91,102 +93,86 @@ class _TeachersState extends State<Teachers> {
     );
   }
 }
-class TeachersList extends StatelessWidget {
+class TeachersViewList extends StatelessWidget {
 
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(stream:_firestore.collection('teacher_details').orderBy('name',descending: false).snapshots(),
       builder: (BuildContext context,AsyncSnapshot snapshot){
-          final teacherlist=snapshot.data.docs;
-          List<TeacherContainer> teacher=[];
-          for(var teachers in teacherlist){
-            final teachername=teachers.data()['name'];
-            final teacherGender=teachers.data()['gender'];
-            final teacherEmail=teachers.data()['email'];
-            final teacherNo=teachers.data()['phone'];
-            final teacherAge=teachers.data()['age'];
-            final teacherContainer=  TeacherContainer(name: teachername,gender: teacherGender,
-            age: teacherAge,email: teacherEmail,phone_no: teacherNo,);
-            teacher.add(teacherContainer);
-          }
-          return Container(
-            height: 400,
-            width: 900,
-            child: ListView(
-
-              padding: EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 20,
+      if(snapshot.hasData) {
+            final teacherlist = snapshot.data.docs;
+            List<Teacher> teacher = [];
+            for (var TeachersView in teacherlist) {
+              final teachername = TeachersView.data()['name'];
+              final teacherGender = TeachersView.data()['gender'];
+              final teacherEmail = TeachersView.data()['email'];
+              final teacherNo = TeachersView.data()['phone'];
+              final teacherAge = TeachersView.data()['age'];
+              final teacherClass = TeachersView.data()['class'];
+              final teacherAddress = TeachersView.data()['address'];
+              final teacherContainer = Teacher(
+                name: teachername,
+                gender: teacherGender,
+                age: teacherAge,
+                email: teacherEmail,
+                phone_no: teacherNo,
+                Class: teacherClass,
+                address: teacherAddress
+              );
+              teacher.add(teacherContainer);
+            }
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.6,
+              // margin: EdgeInsets.symmetric(vertical: 5,),
+              child: ListView.builder(
+                itemCount: teacher.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0)
+                    ),
+                    margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      leading: Icon(Icons.person_outline, color: Colors.black,),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      tileColor: Color(0xffEAF0D4),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(teacher[index].name, style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500
+                          ),),
+                          SizedBox(height: 5,),
+                          Text(
+                            teacher[index].Class != null
+                                ? teacher[index].Class
+                                :  "-",
+                            style: TextStyle(
+                              fontSize: 12,
+                          ),
+                          )
+                        ],
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios_sharp, color:Colors.grey),
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TeacherProfile(teacher:teacher[index])));
+                      },
+                    ),
+                  );
+                },
               ),
-              children: teacher,
-            ),
-          );
-    });
+            );
+          }else{
+         return Center(child: CircularProgressIndicator(color: Color(0xFFA9C938),));
+      }
+        });
   }
 
 }
-class TeacherContainer extends StatelessWidget {
-  TeacherContainer({this.name,this.age,this.gender,this.phone_no,this.email});
-  final String name;
-  final String age;
-  final String gender;
-  final String phone_no;
-  final String email;
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        FlatButton(
-
-          onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => Student_Profile(name: name,age: age,email: email,)));
-          },
-
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-            decoration: BoxDecoration(
-              color: Color(0xffEAF0D4),
-              borderRadius: BorderRadius.circular(10),
-
-
-            ),
-
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('$name',style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color:Colors.black,
-                ),),
-                Text('$age',style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xff585757),
-                ),),
-                Text('$gender',style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xff585757),
-                ),),
-                Text('$phone_no',style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xff585757),
-                ),),
-                Text('$email',style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xff585757),
-                ),),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        )
-      ],
-    );
-  }
-}

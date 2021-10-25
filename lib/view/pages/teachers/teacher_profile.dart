@@ -1,41 +1,23 @@
+import 'package:digital_era_kids/model/teacher.dart';
 import 'package:flutter/material.dart';
+
 class TeacherProfile extends StatefulWidget {
-  TeacherProfile({this .name,this.age,this.email,this.address,this.gender,this.Class,this.phoneno});
-  final String email;
-  final String name;
-  final String age;
-  final String address;
-  final String gender;
-  final String Class;
-  final String phoneno;
+  Teacher teacher;
+  TeacherProfile({@required this.teacher});
 
   @override
-  _TeacherProfileState createState() => _TeacherProfileState();
+  teacherProfileState createState() => teacherProfileState(teacher: teacher);
 }
 
-class _TeacherProfileState extends State<TeacherProfile> {
-  String tname;
-  String tage;
-  String temail;
-  String tphone;
-  String tgender;
-  String tclass;
-  String taddress;
+class teacherProfileState extends State<TeacherProfile> {
+  Teacher teacher;
+  teacherProfileState({this.teacher});
+
   @override
   void initState() {
-
     super.initState();
-    getData(widget.email,widget.age,widget.name,widget.address,widget.gender,widget.Class,widget.phoneno);
   }
-  void getData(email,age,name,address,gender,Class,phoneno){
-    tname=name;
-    tage=age;
-    temail=email;
-    taddress=address;
-    tgender=gender;
-    tclass=Class;
-    tphone=phoneno;
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,80 +63,222 @@ class _TeacherProfileState extends State<TeacherProfile> {
                 ),
               )),
           preferredSize: Size.fromHeight(100.0)),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 25,vertical: 5),
-        child: Column(
-
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30,vertical: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '$tname',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      teacher.name,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'CLASS TEACHER: $tclass',
-                    style: TextStyle(fontSize: 16, color: Color(0xff585757)),
-                  ),
-                  Text(
-                    'GENDER: $tgender',
-                    style: TextStyle(fontSize: 16, color: Color(0xff585757)),
-                  ),
-                  // Text(
-                  //   '',
-                  //   style: TextStyle(fontSize: 16, color: Color(0xff585757)),
-                  // ),
-                ],
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'CLASS TEACHER: ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff585757),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),Text(
+                          teacher.Class,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff585757),
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'GENDER: ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff585757),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),Text(
+                          teacher.gender,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff585757),
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-                height: 25
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30,vertical: 25),
-
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color(0xffEAF0D4),
+              SizedBox(height: 25),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xffEAF0D4),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Contact Details:',
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Mobile No: ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xff585757),
+                              fontWeight: FontWeight.w500
+                          ),
+                        ),
+                        Text(
+                          teacher.phone_no,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xff585757),
+                              fontWeight: FontWeight.normal
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Email ID: ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff585757),
+                              fontWeight: FontWeight.w500
+                          ),
+                        ),
+                        Text(
+                          teacher.email,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff585757),
+                              fontWeight: FontWeight.normal
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Contact Details:',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-                  Text('Mobile No: $tphone',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
-                  Text('Email ID:$temail',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
-                ],
+              SizedBox(
+                height: 25,
               ),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30,vertical: 25),
-
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color(0xffEAF0D4),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xffEAF0D4),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Personal Details:',
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Address: ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xff585757),
+                              fontWeight: FontWeight.w500
+                          ),
+                        ),Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width *0.6,
+                            child: Text(
+                              teacher.address,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xff585757),
+                                  fontWeight: FontWeight.normal
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5,),
+                    Row(
+                      children: [
+                        Text(
+                          'Age: ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xff585757),
+                              fontWeight: FontWeight.w500
+                          ),
+                        ),Text(
+                          teacher.age,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xff585757),
+                              fontWeight: FontWeight.normal
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5,),
+                    Row(
+                      children: [
+                        Text(
+                          'Nationality: ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xff585757),
+                              fontWeight: FontWeight.w500
+                          ),
+                        ),
+                        Text(
+                          'Indian',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xff585757),
+                              fontWeight: FontWeight.normal
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Personal Details:',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-                  Text('Address:$taddress',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
-                  Text('Age:$tage',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
-                  Text('Nationality:Indian',style: TextStyle(fontSize: 18,color: Color(0xff585757),),),
-
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
