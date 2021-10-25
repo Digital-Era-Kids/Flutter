@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_era_kids/model/Student.dart';
 import 'package:digital_era_kids/view/pages/students/add_student.dart';
+import 'package:digital_era_kids/view/pages/students/student_profile.dart';
 import 'package:flutter/material.dart';
 
 final _firestore=FirebaseFirestore.instance;
@@ -97,85 +98,85 @@ class _StudentsViewState extends State<StudentsView> {
     );
   }
 }
-class StudentViewList extends StatelessWidget {
-
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(stream:_firestore.collection('teacher_details').orderBy('name',descending: false).snapshots(),
-        builder: (BuildContext context,AsyncSnapshot snapshot){
-          if(snapshot.hasData) {
-            final studentlist = snapshot.data.docs;
-            List<Student> students = [];
-            for (var studentView in studentlist) {
-              final studentname = studentView.data()['name'];
-              final studentGender = studentView.data()['gender'];
-              final studentEmail = studentView.data()['email'];
-              final studentNo = studentView.data()['phone'];
-              final studentAge = studentView.data()['age'];
-              final studentClass = studentView.data()['class'];
-              final studentAddress = studentView.data()['address'];
-              final studentContainer = Student(
-                  name: studentname,
-                  gender: studentGender,
-                  age: studentAge,
-                  email: studentEmail,
-                  phone_no: studentNo,
-                  Class: studentClass,
-                  address: studentAddress
-              );
-              students.add(studentContainer);
-            }
-            return Container(
-              height: MediaQuery.of(context).size.height * 0.6,
-              // margin: EdgeInsets.symmetric(vertical: 5,),
-              child: ListView.builder(
-                itemCount: students.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.0)
-                    ),
-                    margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      leading: Icon(Icons.person_outline, color: Colors.black,),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      tileColor: Color(0xffEAF0D4),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(students[index].name, style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500
-                          ),),
-                          SizedBox(height: 5,),
-                          Text(
-                            students[index].Class != null
-                                ? students[index].Class
-                                :  "-",
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          )
-                        ],
-                      ),
-                      trailing: Icon(Icons.arrow_forward_ios_sharp, color:Colors.grey),
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TeacherProfile(teacher:teacher[index])));
-                      },
-                    ),
-                  );
-                },
-              ),
-            );
-          }else{
-            return Center(child: CircularProgressIndicator(color: Color(0xFFA9C938),));
-          }
-        });
-  }
-
-}
+// class StudentViewList extends StatelessWidget {
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return StreamBuilder<QuerySnapshot>(stream:_firestore.collection('teacher_details').orderBy('name',descending: false).snapshots(),
+//         builder: (BuildContext context,AsyncSnapshot snapshot){
+//           if(snapshot.hasData) {
+//             final studentlist = snapshot.data.docs;
+//             List<Student> students = [];
+//             for (var studentView in studentlist) {
+//               final studentname = studentView.data()['name'];
+//               final studentGender = studentView.data()['gender'];
+//               final studentEmail = studentView.data()['email'];
+//               final studentNo = studentView.data()['phone'];
+//               final studentAge = studentView.data()['age'];
+//               final studentClass = studentView.data()['class'];
+//               final studentAddress = studentView.data()['address'];
+//               final studentContainer = Student(
+//                   name: studentname,
+//                   gender: studentGender,
+//                   age: studentAge,
+//                   email: studentEmail,
+//                   phone_no: studentNo,
+//                   Class: studentClass,
+//                   address: studentAddress
+//               );
+//               students.add(studentContainer);
+//             }
+//             return Container(
+//               height: MediaQuery.of(context).size.height * 0.6,
+//               // margin: EdgeInsets.symmetric(vertical: 5,),
+//               child: ListView.builder(
+//                 itemCount: students.length,
+//                 itemBuilder: (BuildContext context, int index) {
+//                   return Container(
+//                     decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(30.0)
+//                     ),
+//                     margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+//                     child: ListTile(
+//                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+//                       leading: Icon(Icons.person_outline, color: Colors.black,),
+//                       shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(15.0),
+//                       ),
+//                       tileColor: Color(0xffEAF0D4),
+//                       title: Column(
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: [
+//                           Text(students[index].name, style: TextStyle(
+//                               fontSize: 20,
+//                               fontWeight: FontWeight.w500
+//                           ),),
+//                           SizedBox(height: 5,),
+//                           Text(
+//                             students[index].Class != null
+//                                 ? students[index].Class
+//                                 :  "-",
+//                             style: TextStyle(
+//                               fontSize: 12,
+//                             ),
+//                           )
+//                         ],
+//                       ),
+//                       trailing: Icon(Icons.arrow_forward_ios_sharp, color:Colors.grey),
+//                       onTap: (){
+//                         Navigator.of(context).push(MaterialPageRoute(
+//                             builder: (context) => Student_Profile(teacher:teacher[index])));
+//                       },
+//                     ),
+//                   );
+//                 },
+//               ),
+//             );
+//           }else{
+//             return Center(child: CircularProgressIndicator(color: Color(0xFFA9C938),));
+//           }
+//         });
+//   }
+//
+// }
