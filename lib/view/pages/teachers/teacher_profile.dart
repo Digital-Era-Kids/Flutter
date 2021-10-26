@@ -2,7 +2,7 @@ import 'package:digital_era_kids/model/User.dart';
 import 'package:flutter/material.dart';
 
 class TeacherProfile extends StatefulWidget {
-  User teacher;
+  Users teacher;
   TeacherProfile({@required this.teacher});
 
   @override
@@ -10,7 +10,7 @@ class TeacherProfile extends StatefulWidget {
 }
 
 class teacherProfileState extends State<TeacherProfile> {
-  User teacher;
+  Users teacher;
   teacherProfileState({this.teacher});
 
   @override

@@ -1,8 +1,8 @@
 import 'package:digital_era_kids/view/pages/students/student_profile.dart';
 import 'package:flutter/material.dart';
 
-class User{
-  User(
+class Users{
+  Users(
       {this.name, this.age, this.gender, this.phone_no, this.email, this.Class, this.address, this.roleId, this.salary});
 
   final String name;

@@ -102,7 +102,7 @@ class TeachersViewList extends StatelessWidget {
       builder: (BuildContext context,AsyncSnapshot snapshot){
       if(snapshot.hasData) {
             final teacherlist = snapshot.data.docs;
-            List<User> teacher = [];
+            List<Users> teacher = [];
             for (var TeachersView in teacherlist) {
               final teachername = TeachersView.data()['name'];
               final teacherGender = TeachersView.data()['gender'];
@@ -112,7 +112,7 @@ class TeachersViewList extends StatelessWidget {
               final teacherClass = TeachersView.data()['class'];
               final teacherAddress = TeachersView.data()['address'];
               final roleId = TeachersView.data()["role_id"];
-              final teacherContainer = User(
+              final teacherContainer = Users(
                 name: teachername,
                 gender: teacherGender,
                 age: teacherAge,
