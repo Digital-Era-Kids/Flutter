@@ -69,28 +69,29 @@ class _StudentsViewState extends State<StudentsView> {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Container(
-                  height: 60,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.grey[300])),
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                  child: TextButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Search',
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                          Icon(Icons.search, color: Colors.grey[700])
-                        ],
-                      ))),
+              // Container(
+              //     height: 60,
+              //     padding: EdgeInsets.symmetric(horizontal: 10),
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(30),
+              //         border: Border.all(color: Colors.grey[300])),
+              //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              //     child: TextButton(
+              //         onPressed: () {},
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Text(
+              //               'Search',
+              //               style: TextStyle(color: Colors.grey[700]),
+              //             ),
+              //             Icon(Icons.search, color: Colors.grey[700])
+              //           ],
+              //         ))),
               SizedBox(
                 height: 20,
               ),
+              StudentViewList()
             ],
           ),
         ),
@@ -99,95 +100,235 @@ class _StudentsViewState extends State<StudentsView> {
   }
 }
 
-// class StudentViewList extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder<QuerySnapshot>(
-//         stream: _firestore
-//             .collection('teacher_details')
-//             .orderBy('name', descending: false)
-//             .snapshots(),
-//         builder: (BuildContext context, AsyncSnapshot snapshot) {
-//           if (snapshot.hasData) {
-//             final studentlist = snapshot.data.docs;
-//             List<User> students = [];
-//             for (var studentView in studentlist) {
-//               final studentname = studentView.data()['name'];
-//               final studentGender = studentView.data()['gender'];
-//               final studentEmail = studentView.data()['email'];
-//               final studentNo = studentView.data()['phone'];
-//               final studentAge = studentView.data()['age'];
-//               final studentClass = studentView.data()['class'];
-//               final studentAddress = studentView.data()['address'];
-//               final studentContainer = User(
-//                   name: studentname,
-//                   gender: studentGender,
-//                   age: studentAge,
-//                   email: studentEmail,
-//                   phone_no: studentNo,
-//                   Class: studentClass,
-//                   address: studentAddress);
-//               students.add(studentContainer);
-//             }
-//             return Container(
-//               height: MediaQuery.of(context).size.height * 0.6,
-//               // margin: EdgeInsets.symmetric(vertical: 5,),
-//               child: ListView.builder(
-//                 itemCount: students.length,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   return Container(
-//                     decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(30.0)),
-//                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-//                     child: ListTile(
-//                       contentPadding:
-//                           EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-//                       leading: Icon(
-//                         Icons.person_outline,
-//                         color: Colors.black,
-//                       ),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(15.0),
-//                       ),
-//                       tileColor: Color(0xffEAF0D4),
-//                       title: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           Text(
-//                             students[index].name,
-//                             style: TextStyle(
-//                                 fontSize: 20, fontWeight: FontWeight.w500),
-//                           ),
-//                           SizedBox(
-//                             height: 5,
-//                           ),
-//                           Text(
-//                             students[index].Class != null
-//                                 ? students[index].Class
-//                                 : "-",
-//                             style: TextStyle(
-//                               fontSize: 12,
-//                             ),
-//                           )
-//                         ],
-//                       ),
-//                       trailing: Icon(Icons.arrow_forward_ios_sharp,
-//                           color: Colors.grey),
-//                       onTap: () {
-//                         //   Navigator.of(context).push(MaterialPageRoute(
-//                         //       builder: (context) => Student_Profile(teacher:teacher[index])));
-//                       },
-//                     ),
-//                   );
-//                 },
-//               ),
-//             );
-//           } else {
-//             return Center(
-//                 child: CircularProgressIndicator(
-//               color: Color(0xFFA9C938),
-//             ));
-//           }
-//         });
-//   }
-// }
+class StudentViewList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+        stream: _firestore
+            .collection('users')
+            .orderBy('name', descending: false)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            final studentlist = snapshot.data.docs;
+            List<Users> students = [];
+            for (var studentView in studentlist) {
+              final studentname = studentView.data()['name'];
+              final studentGender = studentView.data()['gender'];
+              final studentEmail = studentView.data()['email'];
+              final studentNo = studentView.data()['phone'];
+              final studentAge = (studentView.data()['age']);
+              final studentClass = studentView.data()['class'];
+              final studentAddress = studentView.data()['address'];
+              final studentContainer = Users(
+                  name: studentname,
+                  gender: studentGender,
+                  age: studentAge,
+                  email: studentEmail,
+                  phone_no: studentNo,
+                  Class: studentClass,
+                  address: studentAddress);
+              students.add(studentContainer);
+            }
+            List<Users> LKG_A =
+                students.where((element) => element.Class == "LKG A").toList();
+            List<Users> LKG_B =
+                students.where((element) => element.Class == "LKG B").toList();
+            List<Users> UKG_A =
+                students.where((element) => element.Class == "UKG A").toList();
+            List<Users> UKG_B =
+                students.where((element) => element.Class == "UKG B").toList();
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  ExpansionTile(
+                    title: Text("LKG A",
+                        style: TextStyle(fontSize: 20, color: Colors.black)),
+                    children: [
+                      LKG_A.length == 0
+                          ? Container(margin: EdgeInsets.symmetric(vertical: 10),child: Text("No students in this class"))
+                          : Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: ScrollPhysics(),
+                                itemCount: LKG_A.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                        tileColor: Color(0xffEAF0D4),
+                                        leading: Icon(
+                                            Icons.account_circle_outlined,
+                                            size: 42,
+                                            color: Color(0xff0083fd)),
+                                        title: Text(LKG_A[index].name,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500)),
+                                      trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey),
+                                      onTap: (){
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user: LKG_A[index],)));
+                                      },
+                                    ),
+
+                                  );
+                                },
+                              ),
+                          )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  ExpansionTile(
+                    childrenPadding: EdgeInsets.symmetric(vertical: 10),
+                    title: Text("LKG B",
+                        style: TextStyle(fontSize: 20, color: Colors.black)),
+                    children: [
+                      LKG_B.length == 0
+                          ? Container(margin: EdgeInsets.symmetric(vertical: 10),child: Text("No students in this class"))
+                          : Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                            child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                                itemCount: LKG_B.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                        tileColor: Color(0xffEAF0D4),
+                                        leading: Icon(
+                                            Icons.account_circle_outlined,
+                                            size: 42,
+                                            color: Color(0xff0083fd)),
+                                        title: Text(LKG_B[index].name,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500)),
+                                      trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey),
+                                      onTap: (){
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user:LKG_B[index])));
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                          )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  ExpansionTile(
+                    title: Text("UKG A",
+                        style: TextStyle(fontSize: 20, color: Colors.black)),
+                    children: [
+                      UKG_A.length == 0
+                          ? Container(margin: EdgeInsets.symmetric(vertical: 10),child: Text("No students in this class"))
+                          : Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                            child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                                itemCount: UKG_A.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                        tileColor: Color(0xffEAF0D4),
+                                        leading: Icon(
+                                            Icons.account_circle_outlined,
+                                            size: 42,
+                                            color: Color(0xff0083fd)),
+                                        title: Text(UKG_A[index].name,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500)),
+                                      trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey),
+                                      onTap: (){
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user:UKG_A[index])));
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                          )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  ExpansionTile(
+                    title: Text("UKG B",
+                        style: TextStyle(fontSize: 20, color: Colors.black)),
+                    children: [
+                      UKG_B.length == 0
+                          ? Container(margin: EdgeInsets.symmetric(vertical: 10),child: Text("No students in this class"))
+                          : Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                            child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                                itemCount: UKG_B.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                        tileColor: Color(0xffEAF0D4),
+                                        leading: Icon(
+                                            Icons.account_circle_outlined,
+                                            size: 42,
+                                            color: Color(0xff0083fd)),
+                                        title: Text(UKG_B[index].name,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500)),
+                                      trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey),
+                                      onTap: (){
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user: UKG_B[index],)));
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                          )
+                    ],
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Center(
+                child: CircularProgressIndicator(
+              color: Color(0xFFA9C938),
+            ));
+          }
+        });
+  }
+}

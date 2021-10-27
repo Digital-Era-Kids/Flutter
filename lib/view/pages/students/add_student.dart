@@ -16,7 +16,8 @@ class Student_Create extends StatefulWidget {
 class _Student_CreateState extends State<Student_Create> {
   final _fire = FirebaseFirestore.instance;
   final _formKey = GlobalKey<FormState>();
-  String name, phoneNo, salary, email, address, age;
+  String name, email, address;
+  int phoneNo, age, salary;
   String gender, Class;
   authServices auth;
 
@@ -135,7 +136,7 @@ class _Student_CreateState extends State<Student_Create> {
                               validator: (value) => validateMobile(value),
                               onChanged: (value) {
                                 setState(() {
-                                  phoneNo = value;
+                                  phoneNo = int.parse((value));
                                 });
                               },
                               decoration: InputDecoration(
@@ -167,7 +168,7 @@ class _Student_CreateState extends State<Student_Create> {
                               },
                               onChanged: (value) {
                                 setState(() {
-                                  age = value;
+                                  age = int.parse(value);
                                 });
                               },
                               decoration: InputDecoration(

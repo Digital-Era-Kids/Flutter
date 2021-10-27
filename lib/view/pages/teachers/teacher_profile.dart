@@ -71,60 +71,66 @@ class teacherProfileState extends State<TeacherProfile> {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      teacher.name,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'CLASS TEACHER: ',
+                          teacher.name,
                           style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xff585757),
-                            fontWeight: FontWeight.w500,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ),Text(
-                          teacher.Class,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xff585757),
-                            fontWeight: FontWeight.normal,
-                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'CLASS TEACHER: ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xff585757),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),Text(
+                              teacher.Class,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff585757),
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'GENDER: ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xff585757),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),Text(
+                              teacher.gender,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff585757),
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'GENDER: ',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xff585757),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),Text(
-                          teacher.gender,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xff585757),
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
+                    Icon(Icons.account_circle_outlined, size:100, color: Color(0xff0083fd))
                   ],
                 ),
               ),
@@ -156,7 +162,7 @@ class teacherProfileState extends State<TeacherProfile> {
                           ),
                         ),
                         Text(
-                          teacher.phone_no,
+                          teacher.phone_no.toString(),
                           style: TextStyle(
                               fontSize: 14,
                               color: Color(0xff585757),
@@ -244,7 +250,7 @@ class teacherProfileState extends State<TeacherProfile> {
                               fontWeight: FontWeight.w500
                           ),
                         ),Text(
-                          teacher.age,
+                          teacher.age.toString(),
                           style: TextStyle(
                               fontSize: 14,
                               color: Color(0xff585757),

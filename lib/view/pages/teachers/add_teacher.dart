@@ -19,7 +19,8 @@ class Teacher_Create extends StatefulWidget {
 class _Teacher_CreateState extends State<Teacher_Create> {
   final _formKey = GlobalKey<FormState>();
   // FirebaseAuth auth = FirebaseAuth.insta
-  String name, phoneNo, salary, email, address, age;
+  String name, email, address;
+  int phoneNo, salary, age;
   String gender, Class;
   authServices auth = new authServices();
   String validateMobile(String value) {
@@ -153,7 +154,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                               ),
                               onChanged: (value) {
                                 setState(() {
-                                  phoneNo = value;
+                                  phoneNo = int.parse(value);
                                 });
                               },
                             ),
@@ -185,7 +186,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                               ),
                               onChanged: (value) {
                                 setState(() {
-                                  age = value;
+                                  age = int.parse(value);
                                 });
                               },
                             ),
@@ -287,7 +288,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                           ),
                           onChanged: (value) {
                             setState(() {
-                              salary = value;
+                              salary = int.parse(value);
                             });
                           },
                         ),
@@ -419,7 +420,7 @@ class _Teacher_CreateState extends State<Teacher_Create> {
                                           'name': name,
                                           'age': age,
                                           'phone': phoneNo,
-                                          'salary': int.parse(salary),
+                                          'salary': salary,
                                           'class': Class,
                                           'gender': gender,
                                           'address': address,

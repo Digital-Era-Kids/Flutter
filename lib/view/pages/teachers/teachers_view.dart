@@ -5,7 +5,8 @@ import 'package:digital_era_kids/view/pages/teachers/teacher_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_era_kids/model/User.dart';
-final _firestore=FirebaseFirestore.instance;
+
+final _firestore = FirebaseFirestore.instance;
 
 class TeachersView extends StatefulWidget {
   // const TeachersView({Key? key}) : super(key: key);
@@ -18,9 +19,12 @@ class _TeachersViewState extends State<TeachersView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:  PreferredSize(
+      bottomNavigationBar: PreferredSize(
         // preferredSize: Size.fromHeight(1),
-        child: Container(height:30,color: Color(0xffffc809),),
+        child: Container(
+          height: 30,
+          color: Color(0xffffc809),
+        ),
       ),
       appBar: PreferredSize(
           child: Container(
@@ -41,8 +45,13 @@ class _TeachersViewState extends State<TeachersView> {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(width: 20,),
-                    Text("TeachersView",style: TextStyle(color: Colors.black,fontSize: 32),)
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      "TeachersView",
+                      style: TextStyle(color: Colors.black, fontSize: 32),
+                    )
                   ],
                 ),
               )),
@@ -53,35 +62,35 @@ class _TeachersViewState extends State<TeachersView> {
         backgroundColor: Color(0xff377DFF),
         //tooltip: accessTypes["Create"].toString(),
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Teacher_Create()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Teacher_Create()));
         },
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding:EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Container(
-                height: 60,
-                padding:EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Colors.grey[300])),
-                margin:EdgeInsets.symmetric(horizontal: 20,vertical: 30) ,
-                  child: TextButton(
-                      onPressed: () {
-
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Search',
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                          Icon(Icons.search, color: Colors.grey[700])
-                        ],
-                      ))),
+              // Container(
+              //   height: 60,
+              //   padding:EdgeInsets.symmetric(horizontal: 10),
+              //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+              //   border: Border.all(color: Colors.grey[300])),
+              //   margin:EdgeInsets.symmetric(horizontal: 20,vertical: 30) ,
+              //     child: TextButton(
+              //         onPressed: () {
+              //
+              //         },
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Text(
+              //               'Search',
+              //               style: TextStyle(color: Colors.grey[700]),
+              //             ),
+              //             Icon(Icons.search, color: Colors.grey[700])
+              //           ],
+              //         ))),
               SizedBox(
                 height: 20,
               ),
@@ -93,14 +102,14 @@ class _TeachersViewState extends State<TeachersView> {
     );
   }
 }
+
 class TeachersViewList extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(stream:_firestore.collection('users').snapshots(),
-      builder: (BuildContext context,AsyncSnapshot snapshot){
-      if(snapshot.hasData) {
+    return StreamBuilder<QuerySnapshot>(
+        stream: _firestore.collection('users').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
             final teacherlist = snapshot.data.docs;
             List<Users> teacher = [];
             for (var TeachersView in teacherlist) {
@@ -113,15 +122,14 @@ class TeachersViewList extends StatelessWidget {
               final teacherAddress = TeachersView.data()['address'];
               final roleId = TeachersView.data()["role_id"];
               final teacherContainer = Users(
-                name: teachername,
-                gender: teacherGender,
-                age: teacherAge,
-                email: teacherEmail,
-                phone_no: teacherNo,
-                Class: teacherClass,
-                address: teacherAddress,
-                roleId: roleId
-              );
+                  name: teachername,
+                  gender: teacherGender,
+                  age: teacherAge,
+                  email: teacherEmail,
+                  phone_no: teacherNo,
+                  Class: teacherClass,
+                  address: teacherAddress,
+                  roleId: roleId);
               teacher.add(teacherContainer);
             }
             teacher = teacher.where((element) => element.roleId == 1).toList();
@@ -135,12 +143,13 @@ class TeachersViewList extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0)
-                    ),
-                    margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                        borderRadius: BorderRadius.circular(30.0)),
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      leading: Icon(Icons.person_outline, color: Colors.black,),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      leading: Icon(Icons.account_circle_outlined,
+                          size: 42, color: Color(0xff0083fd)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
@@ -148,36 +157,42 @@ class TeachersViewList extends StatelessWidget {
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(teacher[index].name, style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500
-                          ),),
-                          SizedBox(height: 5,),
+                          Text(
+                            teacher[index].name,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Text(
                             teacher[index].Class != null
                                 ? teacher[index].Class
-                                :  "-",
+                                : "-",
                             style: TextStyle(
-                              fontSize: 12,
-                          ),
+                              fontSize: 16,
+                            ),
                           )
                         ],
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios_sharp, color:Colors.grey),
-                      onTap: (){
+                      trailing: Icon(Icons.arrow_forward_ios_sharp,
+                          color: Colors.grey),
+                      onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TeacherProfile(teacher:teacher[index])));
+                            builder: (context) =>
+                                TeacherProfile(teacher: teacher[index])));
                       },
                     ),
                   );
                 },
               ),
             );
-          }else{
-         return Center(child: CircularProgressIndicator(color: Color(0xFFA9C938),));
-      }
+          } else {
+            return Center(
+                child: CircularProgressIndicator(
+              color: Color(0xFFA9C938),
+            ));
+          }
         });
   }
-
 }
-
