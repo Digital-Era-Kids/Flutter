@@ -1,4 +1,6 @@
+import 'package:digital_era_kids/view/pages/students/student_profile.dart';
 import 'package:digital_era_kids/view/pages/students/student_view.dart';
+import 'package:digital_era_kids/view/pages/teachers/teacher_profile.dart';
 import 'package:digital_era_kids/view/pages/teachers/teachers_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -165,9 +167,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       for (var u in users) {
                         final _email = u.data()["email"];
                         final roleId = u.data()["role_id"];
+                        final name = u.data()["name"];
+                        final gender = u.data()["gender"];
+                        final age = u.data()['age'];
+                        final phoneNumber = u.data()['phone'];
+                        final Class =  u.data()['class'];
+                        final address = u.data()['address'];
                         final userData = Users(
                           email: _email,
-                            roleId: roleId
+                            roleId: roleId,
+                          name: name,
+                          gender: gender,
+                          age: age,
+                          phone_no: phoneNumber,
+                          Class: Class,
+                          address: address,
                         );
                         users1.add(userData);
                       }
@@ -212,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  StudentsView()));
+                                                  TeacherProfile(teacher: uu)));
                                     },
                                   ),
                                   SizedBox(
@@ -357,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  StudentsView()));
+                                                  Student_Profile(user: uu)));
                                     },
                                   ),
                                   SizedBox(
