@@ -101,7 +101,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         {
                           'text': messageText,
                           'sender': email,
-                          'time': DateTime.now().toIso8601String().toString(),
+                          'time': DateTime.now(),
                         },
                       );
                     },
