@@ -1,4 +1,5 @@
 import 'package:digital_era_kids/services/auth_services.dart';
+import 'package:digital_era_kids/view/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -172,8 +173,7 @@ class _AddAssingmentState extends State<AddAssingment> {
                     borderRadius: BorderRadius.circular(10),
                     color: Color(0xff0083FD)),
                 child: TextButton(onPressed: ()async{
-                    textContorller2.clear();
-                    textContorller1.clear();
+
                    _fire.collection('assignments').add({
                     'assignment':assingment,
                     'Date':date,
@@ -185,17 +185,28 @@ class _AddAssingmentState extends State<AddAssingment> {
                       "Add",
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
-
-
                 ),
-
               )
-
-
             ],
           ),
         ),
       )
     );
   }
+}
+showFlushbar(BuildContext context, String message) {
+  Flushbar(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(20),
+    messageText: Text(
+      message,
+      style: TextStyle(color: Colors.white),
+    ),
+    borderRadius: 10,
+    backgroundColor: Colors.grey[800],
+    duration: Duration(seconds: 3),
+  )..show(context).whenComplete(() => Navigator.of(context).push(
+      MaterialPageRoute(
+          builder: (context) =>
+              HomeScreen())));
 }
