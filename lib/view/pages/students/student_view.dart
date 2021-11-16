@@ -120,6 +120,7 @@ class StudentViewList extends StatelessWidget {
               final studentAge = (studentView.data()['age']);
               final studentClass = studentView.data()['class'];
               final studentAddress = studentView.data()['address'];
+              final role_id=studentView.data()['role_id'];
               final studentContainer = Users(
                   name: studentname,
                   gender: studentGender,
@@ -127,17 +128,18 @@ class StudentViewList extends StatelessWidget {
                   email: studentEmail,
                   phone_no: studentNo,
                   Class: studentClass,
-                  address: studentAddress);
+                  address: studentAddress,
+              roleId: role_id);
               students.add(studentContainer);
             }
             List<Users> LKG_A =
-                students.where((element) => element.Class == "LKG A").toList();
+                students.where((element) => element.Class == "LKG A"&&element.roleId==2).toList();
             List<Users> LKG_B =
-                students.where((element) => element.Class == "LKG B").toList();
+                students.where((element) => element.Class == "LKG B"&&element.roleId==2).toList();
             List<Users> UKG_A =
-                students.where((element) => element.Class == "UKG A").toList();
+                students.where((element) => element.Class == "UKG A"&&element.roleId==2).toList();
             List<Users> UKG_B =
-                students.where((element) => element.Class == "UKG B").toList();
+                students.where((element) => element.Class == "UKG B"&&element.roleId==2).toList();
             return SingleChildScrollView(
               child: Column(
                 children: [

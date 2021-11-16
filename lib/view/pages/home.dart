@@ -6,7 +6,9 @@ import 'package:digital_era_kids/services/auth_services.dart';
 import 'package:digital_era_kids/view/pages/attendence/attendence.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_era_kids/model/User.dart';
-
+import 'package:digital_era_kids/view/pages/assingments/add_assingment.dart';
+import 'package:digital_era_kids/view/pages/assingments/view_assingment.dart';
+import 'package:digital_era_kids/view/pages/chats/chat.dart';
 final _firestore = FirebaseFirestore.instance;
 
 class HomeScreen extends StatefulWidget {
@@ -258,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  Attendence()));
+                                                  ChatScreen()));
                                     },
                                     child: Column(
                                       crossAxisAlignment:
@@ -268,13 +270,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: [
                                         Card(
                                           child: Icon(
-                                            Icons.fact_check_outlined,
+                                            Icons.message_outlined,
                                             size: 120,
                                             color: Color(0xFF2564AE),
                                           ),
                                         ),
                                         Text(
-                                          "Mark Attendance",
+                                          "Messages",
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black),
@@ -286,7 +288,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: 30,
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              AddAssingment()));
+                                    },
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
@@ -398,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  Attendence()));
+                                                  ChatScreen()));
                                     },
                                     child: Column(
                                       crossAxisAlignment:
@@ -408,13 +415,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: [
                                         Card(
                                           child: Icon(
-                                            Icons.fact_check_outlined,
+                                            Icons.message_outlined,
                                             size: 120,
                                             color: Color(0xFF2564AE),
                                           ),
                                         ),
                                         Text(
-                                          "Attendance",
+                                          "Messages",
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black),
@@ -426,7 +433,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     width: 30,
                                   ),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ViewAssignment()));
+                                    },
                                     child: Column(
                                       crossAxisAlignment:
                                       CrossAxisAlignment.center,

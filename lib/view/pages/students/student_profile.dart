@@ -54,7 +54,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                           width: 20,
                         ),
                         Text(
-                          "user Profile",
+                          "Profile",
                           style: TextStyle(color: Colors.black, fontSize: 32),
                         ),
                       ],

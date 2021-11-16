@@ -151,7 +151,7 @@ class _LoginState extends State<Login> {
                       ),
                       Align(
                           alignment: Alignment.centerRight,
-                          child: FlatButton(
+                          child: TextButton(
                             child: Text("Forgot password?"),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
