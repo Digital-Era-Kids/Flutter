@@ -153,7 +153,8 @@ final String Class;
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0)),
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child:ListTile(
+                    child: DateTime.parse(assignment[index].date).isAfter(DateTime.now())
+                    ?ListTile(
                       contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       tileColor: Color(0xffEAF0D4),
@@ -165,12 +166,12 @@ final String Class;
                       subtitle: Text(
                         "Due Date: "+ assignment[index].date,
                       ),
-                    ),
+                    )
+                    :Container(),
                   );
                 },
               ),
             );
-
           }
           else {
             return Center(
