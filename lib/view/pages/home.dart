@@ -11,6 +11,8 @@ import 'package:digital_era_kids/model/User.dart';
 import 'package:digital_era_kids/view/pages/assingments/add_assingment.dart';
 import 'package:digital_era_kids/view/pages/assingments/view_assingment.dart';
 import 'package:digital_era_kids/view/pages/chats/chat.dart';
+import 'package:move_to_background/move_to_background.dart';
+
 final _firestore = FirebaseFirestore.instance;
 
 class HomeScreen extends StatefulWidget {
@@ -136,498 +138,548 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )),
           preferredSize: Size.fromHeight(100.0)),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          FractionallySizedBox(
-            heightFactor: 0.2,
-            alignment: Alignment.topCenter,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                  vertical: MediaQuery.of(context).size.height * 0.05),
+      body: WillPopScope(
+        onWillPop: () async {
+          showDialog(
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  contentPadding: EdgeInsets.all(20),
+                  actionsPadding: EdgeInsets.all(20),
+                  title: Text("Do you want to Log Out?"),
+                  actions: [
+                    Container(
+                      width:
+                      MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                              color: Color(0xff0083FD))),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Cancel",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color(0xff0083FD))),
+                      ),
+                    ),
+                    Container(
+                      width:
+                      MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xff0083fd)),
+                      child: TextButton(
+                        onPressed: () {
+                          authentication.SignOut(context);
+                        },
+                        child: Text("Log Out",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white)),
+                      ),
+                    )
+                  ],
+                );
+              },
+              context: context);
+          // MoveToBackground.moveTaskToBack();
+          // return false;
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            FractionallySizedBox(
+              heightFactor: 0.2,
+              alignment: Alignment.topCenter,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * 0.05),
+              ),
             ),
-          ),
-          FractionallySizedBox(
-            alignment: Alignment.bottomCenter,
-            heightFactor: 0.9,
-            child: Container(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-              decoration: BoxDecoration(
-                  color: Color(0xffF6F5F5),
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(18),
-                      topLeft: Radius.circular(18)),
-                  border: Border.all(color: Colors.grey[300])),
-              child: StreamBuilder<QuerySnapshot>(
-                  stream: _firestore.collection('users').snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      final users = snapshot.data.docs;
-                      List<Users> users1 = [];
-                      for (var u in users) {
-                        final _email = u.data()["email"];
-                        final roleId = u.data()["role_id"];
-                        final name = u.data()["name"];
-                        final gender = u.data()["gender"];
-                        final age = u.data()['age'];
-                        final phoneNumber = u.data()['phone'];
-                        final Class =  u.data()['class'];
-                        final address = u.data()['address'];
-                        final userData = Users(
-                          email: _email,
-                            roleId: roleId,
-                          name: name,
-                          gender: gender,
-                          age: age,
-                          phone_no: phoneNumber,
-                          Class: Class,
-                          address: address,
-                        );
-                        users1.add(userData);
+            FractionallySizedBox(
+              alignment: Alignment.bottomCenter,
+              heightFactor: 0.9,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                decoration: BoxDecoration(
+                    color: Color(0xffF6F5F5),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(18),
+                        topLeft: Radius.circular(18)),
+                    border: Border.all(color: Colors.grey[300])),
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: _firestore.collection('users').snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        final users = snapshot.data.docs;
+                        List<Users> users1 = [];
+                        for (var u in users) {
+                          final _email = u.data()["email"];
+                          final roleId = u.data()["role_id"];
+                          final name = u.data()["name"];
+                          final gender = u.data()["gender"];
+                          final age = u.data()['age'];
+                          final phoneNumber = u.data()['phone'];
+                          final Class =  u.data()['class'];
+                          final address = u.data()['address'];
+                          final userData = Users(
+                            email: _email,
+                              roleId: roleId,
+                            name: name,
+                            gender: gender,
+                            age: age,
+                            phone_no: phoneNumber,
+                            Class: Class,
+                            address: address,
+                          );
+                          users1.add(userData);
+                        }
+                        print(users1);
+                        users1 = users1.where((element) => element.email.toLowerCase() == email.toLowerCase()).toList();
+                        for(var u2 in users1){
+                            uu = u2;
+                        }
+                        if (uu.roleId == 1)
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.account_circle_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Profile",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TeacherProfile(teacher: uu)));
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TeachersView()));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.table_chart_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Add TimeTable",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChatScreen()));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.message_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Messages",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                AddAssingment()));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.post_add_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Add Assignments",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        else if(uu.roleId == 2)
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.group,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Profile",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Student_Profile(user: uu)));
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TeachersView()));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.table_chart_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Time Table",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChatScreen()));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.message_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Messages",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ViewAssignment()));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.post_add_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Assignments",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        else
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.group,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Students",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    StudentsView()));
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TeachersView()));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.person_outline,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Teachers",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Attendence()));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.fact_check_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Attendance",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Card(
+                                            child: Icon(
+                                              Icons.post_add_outlined,
+                                              size: 120,
+                                              color: Color(0xFF2564AE),
+                                            ),
+                                          ),
+                                          Text(
+                                            "Assignments",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
                       }
-                      print(users1);
-                      users1 = users1.where((element) => element.email.toLowerCase() == email.toLowerCase()).toList();
-                      for(var u2 in users1){
-                          uu = u2;
+                      else {
+                        return Center(child: CircularProgressIndicator());
                       }
-                      if (uu.roleId == 1)
-                        return SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.account_circle_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Profile",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TeacherProfile(teacher: uu)));
-                                    },
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TeachersView()));
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.table_chart_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Add TimeTable",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChatScreen()));
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.message_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Messages",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                              AddAssingment()));
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.post_add_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Add Assignments",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      else if(uu.roleId == 2)
-                        return SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.group,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Profile",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Student_Profile(user: uu)));
-                                    },
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TeachersView()));
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.table_chart_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Time Table",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChatScreen()));
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.message_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Messages",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ViewAssignment()));
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.post_add_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Assignments",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      else
-                        return SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.group,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Students",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  StudentsView()));
-                                    },
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TeachersView()));
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.person_outline,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Teachers",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Attendence()));
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.fact_check_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Attendance",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Card(
-                                          child: Icon(
-                                            Icons.post_add_outlined,
-                                            size: 120,
-                                            color: Color(0xFF2564AE),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Assignments",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                    }
-                    else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
+                    }),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

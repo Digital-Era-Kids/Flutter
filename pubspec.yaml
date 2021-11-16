@@ -29,6 +29,7 @@ dependencies:
   firebase_auth:
   firebase_core:
   flushbar:
+  move_to_background:
 
 
   # The following adds the Cupertino Icons font to your application.

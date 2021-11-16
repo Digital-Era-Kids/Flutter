@@ -91,28 +91,27 @@ class _ViewAssignmentState extends State<ViewAssignment> {
                     uu = u2;
                   };
                   classS=uu.Class;
-                  return Container();
+                  return SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Assignment(
+                            Class: classS,
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 }
                 else{
                   return Container();
                 }
               }
           ),
-          SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Assignment(
-                    Class: classS,
-                  )
-                ],
-              ),
-            ),
-          )
         ],
       ),
 
@@ -154,11 +153,9 @@ final String Class;
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0)),
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: ListTile(
+                    child:ListTile(
                       contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-
-
                       tileColor: Color(0xffEAF0D4),
                       title: Text(
                         assignment[index].assignment,
@@ -166,9 +163,8 @@ final String Class;
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),
                       subtitle: Text(
-                        assignment[index].date,
+                        "Due Date: "+ assignment[index].date,
                       ),
-
                     ),
                   );
                 },
@@ -182,7 +178,7 @@ final String Class;
                   'NO ASSIGNMENT ADDED YET',
                   style: TextStyle(
                     color: Colors.black54,
-                    fontSize: 30
+                    fontSize: 16
                   ),
                 ));
           }
