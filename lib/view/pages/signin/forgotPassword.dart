@@ -13,7 +13,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  final email=TextEditingController();
+  final email = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,62 +57,72 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             SizedBox(
               height: 50,
             ),
-            Text('Forgot Password',style: TextStyle(fontSize: 30,fontWeight: FontWeight.normal),),
-           
-            Container(
-              margin: EdgeInsets.only(top: 30, right: 30, left: 30),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 15, top: 15),
-                child: TextFormField(
-                    autovalidateMode:
-                    AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value.trim().isEmpty) {
-                        return "Please enter email id";
-                      } else if (EmailValidator.validate(value) ==
-                          false) {
-                        return "Enter correct email id";
-                      } else {
-                        return null;
-                      }
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                     controller: email,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.email_outlined,
-                        color: Color(0xff2329D6),
-                      ),
-                      enabled: true,
-                      hintText: "Enter email id",
-                      labelText: "Email",
-                      labelStyle: TextStyle(
-                          color: Color(0xFFB8B6B6), fontSize: 12),
-                      hintStyle: TextStyle(color: Color(0xFF737373)),
-                      focusedBorder: authTfBorderOutline(true),
-                      border: authTfBorderOutline(false),
-                      enabledBorder: authTfBorderOutline(false),
-                    )),
+            Text(
+              'Forgot Password',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.normal),
+            ),
+            Form(
+              key: _formKey,
+              child: Container(
+                margin: EdgeInsets.only(top: 30, right: 30, left: 30),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 15, top: 15),
+                  child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value.trim().isEmpty) {
+                          return "Please enter email id";
+                        } else if (EmailValidator.validate(value) == false) {
+                          return "Enter correct email id";
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      controller: email,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.email_outlined,
+                          color: Color(0xff2329D6),
+                        ),
+                        enabled: true,
+                        hintText: "Enter email id",
+                        labelText: "Email",
+                        labelStyle:
+                            TextStyle(color: Color(0xFFB8B6B6), fontSize: 12),
+                        hintStyle: TextStyle(color: Color(0xFF737373)),
+                        focusedBorder: authTfBorderOutline(true),
+                        border: authTfBorderOutline(false),
+                        enabledBorder: authTfBorderOutline(false),
+                      )),
+                ),
               ),
             ),
             SizedBox(
               height: 10,
             ),
-            ElevatedButton(onPressed: ()async{
-              await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text).then((value) {
-                Navigator.push(context, MaterialPageRoute(builder:(context)=>Login()));
-              });
-            }, child: Text("Reset Password",
-                style: TextStyle(
-                    fontFamily: 'Roboto',
-                    color: Colors.white,
-                    fontSize: 16)),),
+            ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState.validate()) {
+                  await FirebaseAuth.instance
+                      .sendPasswordResetEmail(email: email.text)
+                      .then((value) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login()));
+                  });
+                }
+              },
+              child: Text("Reset Password",
+                  style: TextStyle(
+                      fontFamily: 'Roboto', color: Colors.white, fontSize: 16)),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
 OutlineInputBorder authTfBorderOutline(bool focused) {
   return OutlineInputBorder(
       borderRadius: BorderRadius.circular(9.0),
