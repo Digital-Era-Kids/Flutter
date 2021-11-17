@@ -1,9 +1,12 @@
 import 'package:digital_era_kids/model/User.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class TeacherProfile extends StatefulWidget {
   Users teacher;
-  TeacherProfile({@required this.teacher});
+  bool flag;
+  TeacherProfile({@required this.teacher, this.flag});
 
   @override
   teacherProfileState createState() => teacherProfileState(teacher: teacher);
@@ -17,7 +20,7 @@ class teacherProfileState extends State<TeacherProfile> {
   void initState() {
     super.initState();
   }
-
+  final _fire = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -283,6 +286,65 @@ class teacherProfileState extends State<TeacherProfile> {
                   ],
                 ),
               ),
+              SizedBox(height: 100,),
+              widget.flag?
+              TextButton(
+                onPressed: (){
+                  showDialog(
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.all(20),
+                          actionsPadding: EdgeInsets.all(20),
+                          title: Text("Do you really want to remove the student?"),
+                          actions: [
+                            Container(
+                              width:
+                              MediaQuery.of(context).size.width * 0.3,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: Color(0xff0083FD))),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("No",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Color(0xff0083FD))),
+                              ),
+                            ),
+                            Container(
+                              width:
+                              MediaQuery.of(context).size.width * 0.3,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(0xff0083fd)),
+                              child: TextButton(
+                                onPressed: () async {
+                                  _fire.collection('users').doc(teacher.email).delete();
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Yes",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white)),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                      context: context);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.delete, color: Colors.red,),
+                    Text("Remove Teacher",style: TextStyle(color: Colors.red),)
+                  ],
+                ),)
+                  :Container()
             ],
           ),
         ),

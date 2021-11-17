@@ -277,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    TeacherProfile(teacher: uu)));
+                                                    TeacherProfile(teacher: uu, flag: false,)));
                                       },
                                     ),
                                     SizedBox(
@@ -422,7 +422,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Student_Profile(user: uu)));
+                                                    Student_Profile(user: uu, flag: false,)));
                                       },
                                     ),
                                     SizedBox(

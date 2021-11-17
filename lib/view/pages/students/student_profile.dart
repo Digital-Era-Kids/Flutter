@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_era_kids/model/User.dart';
 import 'package:flutter/material.dart';
 
 class Student_Profile extends StatefulWidget {
+  bool flag;
   Users user;
-  Student_Profile({@required this.user});
+  Student_Profile({@required this.user, this.flag});
 
   @override
   _Student_ProfileState createState() => _Student_ProfileState(user: user);
@@ -17,7 +19,7 @@ class _Student_ProfileState extends State<Student_Profile> {
   void initState() {
     super.initState();
   }
-
+  final _fire = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +69,7 @@ class _Student_ProfileState extends State<Student_Profile> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
@@ -263,6 +266,65 @@ class _Student_ProfileState extends State<Student_Profile> {
                   ],
                 ),
               ),
+              SizedBox(height: 100,),
+              widget.flag?
+              TextButton(
+                onPressed: (){
+                  showDialog(
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.all(20),
+                          actionsPadding: EdgeInsets.all(20),
+                          title: Text("Do you really want to remove the student?"),
+                          actions: [
+                            Container(
+                              width:
+                              MediaQuery.of(context).size.width * 0.3,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: Color(0xff0083FD))),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("No",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Color(0xff0083FD))),
+                              ),
+                            ),
+                            Container(
+                              width:
+                              MediaQuery.of(context).size.width * 0.3,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color(0xff0083fd)),
+                              child: TextButton(
+                                onPressed: () async {
+                                  _fire.collection('users').doc(user.email).delete();
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Yes",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white)),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                      context: context);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.delete, color: Colors.red,),
+                  Text("Remove Student",style: TextStyle(color: Colors.red),)
+                ],
+              ),)
+                  :Container()
             ],
           ),
         ),
