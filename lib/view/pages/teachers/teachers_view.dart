@@ -180,7 +180,7 @@ class TeachersViewList extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                TeacherProfile(teacher: teacher[index])));
+                                TeacherProfile(teacher: teacher[index], flag: true,)));
                       },
                     ),
                   );

@@ -8,8 +8,8 @@ import 'package:digital_era_kids/services/auth_services.dart';
 import 'package:digital_era_kids/view/pages/attendence/attendence.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_era_kids/model/User.dart';
-import 'package:digital_era_kids/view/pages/assingments/add_assingment.dart';
-import 'package:digital_era_kids/view/pages/assingments/view_assingment.dart';
+import 'package:digital_era_kids/view/pages/assignments/add_assignment.dart';
+import 'package:digital_era_kids/view/pages/assignments/view_assignment.dart';
 import 'package:digital_era_kids/view/pages/chats/chat.dart';
 import 'package:move_to_background/move_to_background.dart';
 
@@ -277,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    TeacherProfile(teacher: uu)));
+                                                    TeacherProfile(teacher: uu, flag: false,)));
                                       },
                                     ),
                                     SizedBox(
@@ -422,7 +422,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Student_Profile(user: uu)));
+                                                    Student_Profile(user: uu, flag: false,)));
                                       },
                                     ),
                                     SizedBox(
