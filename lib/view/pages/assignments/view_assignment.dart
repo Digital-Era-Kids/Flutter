@@ -174,6 +174,11 @@ final String Class;
                       subtitle: Text(
                         "Due Date: "+ DateFormat('yyyy-MM-dd').format(DateTime.parse(assignment[index].date)),
                       ),
+                      leading: Icon(Icons.assignment,
+                          size: 42, color: Color(0xff0083fd)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                     )
                     : Container(),
                   );

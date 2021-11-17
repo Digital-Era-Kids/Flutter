@@ -4,6 +4,8 @@ import 'package:digital_era_kids/view/pages/students/add_student.dart';
 import 'package:digital_era_kids/view/pages/students/student_profile.dart';
 import 'package:flutter/material.dart';
 
+import '../home.dart';
+
 final _firestore = FirebaseFirestore.instance;
 
 class StudentsView extends StatefulWidget {
@@ -64,35 +66,43 @@ class _StudentsViewState extends State<StudentsView> {
               .push(MaterialPageRoute(builder: (context) => Student_Create()));
         },
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              // Container(
-              //     height: 60,
-              //     padding: EdgeInsets.symmetric(horizontal: 10),
-              //     decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(30),
-              //         border: Border.all(color: Colors.grey[300])),
-              //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              //     child: TextButton(
-              //         onPressed: () {},
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             Text(
-              //               'Search',
-              //               style: TextStyle(color: Colors.grey[700]),
-              //             ),
-              //             Icon(Icons.search, color: Colors.grey[700])
-              //           ],
-              //         ))),
-              SizedBox(
-                height: 20,
-              ),
-              StudentViewList()
-            ],
+      body: WillPopScope(
+        onWillPop: ()async{
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) =>
+                      HomeScreen()));
+        },
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                // Container(
+                //     height: 60,
+                //     padding: EdgeInsets.symmetric(horizontal: 10),
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(30),
+                //         border: Border.all(color: Colors.grey[300])),
+                //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                //     child: TextButton(
+                //         onPressed: () {},
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Text(
+                //               'Search',
+                //               style: TextStyle(color: Colors.grey[700]),
+                //             ),
+                //             Icon(Icons.search, color: Colors.grey[700])
+                //           ],
+                //         ))),
+                SizedBox(
+                  height: 20,
+                ),
+                StudentViewList()
+              ],
+            ),
           ),
         ),
       ),
