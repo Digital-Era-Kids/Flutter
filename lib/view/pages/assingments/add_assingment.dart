@@ -5,6 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:digital_era_kids/model/User.dart';
+import 'package:intl/intl.dart';
+
+
 final _fire = FirebaseFirestore.instance;
 class AddAssingment extends StatefulWidget {
 
@@ -33,6 +36,27 @@ class _AddAssingmentState extends State<AddAssingment> {
   final textContorller2=TextEditingController();
   String assingment;
   String date;
+  DateTime _selectedDate;
+  void _pickDateDialog() {
+    showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        //which date will display when user open the picker
+        firstDate: DateTime(1950),
+        //what will be the previous supported year in picker
+        lastDate: DateTime(2100)) //what will be the up to supported date in picker
+        .then((pickedDate) {
+      //then usually do the future job
+      if (pickedDate == null) {
+        //if user tap cancel then this function will stop
+        return;
+      }
+      setState(() {
+        //for rebuilding the ui
+        _selectedDate = pickedDate;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,33 +134,28 @@ class _AddAssingmentState extends State<AddAssingment> {
               SizedBox(
                 height: 10,
               ),
-              TextFormField(
-
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
+              GestureDetector(
+                onTap: (){
+                  _pickDateDialog();
                 },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color(0xffEAF0D4),
-                  enabled: true,
-                  hintText: "DD/MM/YYYY",
-                  labelText: "Add Due Date",
-                  labelStyle:
-                  TextStyle(color: Color(0xFF737373), fontSize: 12),
-                  hintStyle:
-                  TextStyle(color: Color(0xFF737373), fontSize: 14),
+                child: TextFormField(
 
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select date';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xffEAF0D4),
+                    enabled: false,
+                    labelText: _selectedDate==null?"Select Date":DateFormat('yyyy-MM-dd').format(_selectedDate),
+                    labelStyle:
+                    TextStyle(color: Color(0xFF737373), fontSize: 14),
+                  ),
                 ),
-                  controller: textContorller2,
-                  onChanged: (value) {
-                    setState(() {
-                      date = value;
-                    });
-                  }
               ),
               SizedBox(
                 height: 20,
@@ -176,7 +195,7 @@ class _AddAssingmentState extends State<AddAssingment> {
 
                    _fire.collection('assignments').add({
                     'assignment':assingment,
-                    'Date':date,
+                    'Date':_selectedDate.toString(),
                      'class':uu.Class,
                   },);
                    showFlushbar(context, "Assignment Added Successfully");

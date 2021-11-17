@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:digital_era_kids/model/User.dart';
 import 'package:digital_era_kids/model/assignments.dart';
+import 'package:intl/intl.dart';
+
 final _fire=FirebaseFirestore.instance;
 class ViewAssignment extends StatefulWidget {
   // const ViewAssignment({Key? key}) : super(key: key);
@@ -153,8 +155,14 @@ final String Class;
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0)),
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: DateTime.parse(assignment[index].date).isAfter(DateTime.now())
-                    ?ListTile(
+                    child: DateTime.parse(DateFormat('yyyy-MM-dd')
+                        .format(DateTime.parse(assignment[index].date))).
+                    isAfter(DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())))
+                      ||
+                        DateTime.parse(DateFormat('yyyy-MM-dd')
+                            .format(DateTime.parse(assignment[index].date))) ==
+                            (DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())))
+                    ? ListTile(
                       contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       tileColor: Color(0xffEAF0D4),
@@ -164,10 +172,10 @@ final String Class;
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),
                       subtitle: Text(
-                        "Due Date: "+ assignment[index].date,
+                        "Due Date: "+ DateFormat('yyyy-MM-dd').format(DateTime.parse(assignment[index].date)),
                       ),
                     )
-                    :Container(),
+                    : Container(),
                   );
                 },
               ),
