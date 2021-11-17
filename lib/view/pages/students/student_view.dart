@@ -186,7 +186,7 @@ class StudentViewList extends StatelessWidget {
                                       trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey),
                                       onTap: (){
                                         Navigator.of(context)
-                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user: LKG_A[index],)));
+                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user: LKG_A[index],flag: true,)));
                                       },
                                     ),
 
@@ -233,7 +233,7 @@ class StudentViewList extends StatelessWidget {
                                       trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey),
                                       onTap: (){
                                         Navigator.of(context)
-                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user:LKG_B[index])));
+                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user:LKG_B[index],flag: true,)));
                                       },
                                     ),
                                   );
@@ -278,7 +278,7 @@ class StudentViewList extends StatelessWidget {
                                       trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey),
                                       onTap: (){
                                         Navigator.of(context)
-                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user:UKG_A[index])));
+                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user:UKG_A[index], flag: true,)));
                                       },
                                     ),
                                   );
@@ -323,7 +323,7 @@ class StudentViewList extends StatelessWidget {
                                       trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey),
                                       onTap: (){
                                         Navigator.of(context)
-                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user: UKG_B[index],)));
+                                            .push(MaterialPageRoute(builder: (context) => Student_Profile(user: UKG_B[index],flag: true,)));
                                       },
                                     ),
                                   );
