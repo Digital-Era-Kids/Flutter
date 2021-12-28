@@ -1,5 +1,6 @@
 import 'package:digital_era_kids/model/User.dart';
 import 'package:digital_era_kids/services/auth_services.dart';
+import 'package:digital_era_kids/view/pages/home.dart';
 import 'package:digital_era_kids/view/pages/teachers/teachers_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flushbar/flushbar.dart';
@@ -472,6 +473,6 @@ showFlushbar(BuildContext context, String message) {
     duration: Duration(seconds: 3),
   )..show(context).whenComplete(() => message == "Teacher added successfully!!"
       ? Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => TeachersView()))
+          .push(MaterialPageRoute(builder: (context) =>HomeScreen(role: 3,)))
       : null);
 }

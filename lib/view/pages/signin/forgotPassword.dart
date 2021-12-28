@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -107,8 +108,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   await FirebaseAuth.instance
                       .sendPasswordResetEmail(email: email.text)
                       .then((value) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Login()));
+                     showFlushbar(context, 'Reset link is sent to your mail');
                   });
                 }
               },
@@ -130,4 +130,20 @@ OutlineInputBorder authTfBorderOutline(bool focused) {
         color: focused ? Color(0xFF737373) : Color(0xFFB8B6B6),
         width: 1.125,
       ));
+}
+showFlushbar(BuildContext context, String message) {
+  Flushbar(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(20),
+    messageText: Text(
+      message,
+      style: TextStyle(color: Colors.white),
+    ),
+    borderRadius: 10,
+    backgroundColor: Colors.grey[800],
+    duration: Duration(seconds: 3),
+  )..show(context).whenComplete(() => Navigator.of(context).push(
+      MaterialPageRoute(
+          builder: (context) =>
+              Login())));
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_era_kids/services/auth_services.dart';
+import 'package:digital_era_kids/view/pages/home.dart';
 import 'package:digital_era_kids/view/pages/students/student_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flushbar/flushbar.dart';
@@ -435,6 +436,6 @@ showFlushbar(BuildContext context, String message) {
     duration: Duration(seconds: 3),
   )..show(context).whenComplete(() => message == "Student added successfully!!"
       ? Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => StudentsView()))
+          .push(MaterialPageRoute(builder: (context) => HomeScreen(role: 3,)))
       : null);
 }
